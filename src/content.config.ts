@@ -82,67 +82,6 @@ const heroSchema = componentBaseSchema.extend({
 	points: z.array(z.string()).default([]),
 });
 
-const introSchema = componentBaseSchema.extend({
-	type: z.literal("intro"),
-	eyebrow: z.string().optional(),
-	heading: z.string(),
-	body: z.array(z.string()).default([]),
-	list: z.array(z.string()).optional(),
-	primaryAction: actionSchema.optional(),
-	secondaryAction: actionSchema.optional(),
-});
-
-const textBlockSchema = componentBaseSchema.extend({
-	type: z.literal("textBlock"),
-	heading: z.string().optional(),
-	body: z.array(z.string()).default([]),
-	list: z.array(z.string()).optional(),
-	listStyle: z.enum(["bullet", "number"]).default("bullet"),
-	afterList: z.array(z.string()).optional(),
-});
-
-const cardGridSchema = componentBaseSchema.extend({
-	type: z.literal("cardGrid"),
-	eyebrow: z.string().optional(),
-	heading: z.string().optional(),
-	intro: z.string().optional(),
-	items: z
-		.array(
-			z.object({
-				title: z.string(),
-				description: z.string(),
-				list: z.array(z.string()).optional(),
-			}),
-		)
-		.default([]),
-	action: actionSchema.optional(),
-});
-
-const stepListSchema = componentBaseSchema.extend({
-	type: z.literal("stepList"),
-	eyebrow: z.string().optional(),
-	heading: z.string().optional(),
-	intro: z.string().optional(),
-	steps: z
-		.array(
-			z.object({
-				title: z.string(),
-				description: z.string().optional(),
-				list: z.array(z.string()).optional(),
-			}),
-		)
-		.default([]),
-	action: actionSchema.optional(),
-});
-
-const ctaSchema = componentBaseSchema.extend({
-	type: z.literal("cta"),
-	heading: z.string(),
-	text: z.array(z.string()).default([]),
-	primaryAction: actionSchema.optional(),
-	secondaryAction: actionSchema.optional(),
-});
-
 const contactDetailsSchema = componentBaseSchema.extend({
 	type: z.literal("contactDetails"),
 	email: z.string(),
@@ -190,22 +129,92 @@ const knowledgeListingSchema = componentBaseSchema.extend({
 	intro: z.string().optional(),
 });
 
-const componentSchema = z.discriminatedUnion("type", [
-	heroSchema,
-	introSchema,
-	textBlockSchema,
-	cardGridSchema,
-	stepListSchema,
-	ctaSchema,
-	contactDetailsSchema,
-	contactFormSchema,
-	projectsListingSchema,
-	knowledgeListingSchema,
-]);
-
+// The five schemas below accept an optional `image` — built inside a
+// function so astro:content's `image()` helper (which validates + optimizes
+// the referenced file) is available. Everything else stays as a plain
+// module-level const since only these need it.
 const components = defineCollection({
 	loader: glob({ pattern: "**/*.md", base: "./src/content/components" }),
-	schema: componentSchema,
+	schema: ({ image }) => {
+		const introSchema = componentBaseSchema.extend({
+			type: z.literal("intro"),
+			eyebrow: z.string().optional(),
+			heading: z.string(),
+			body: z.array(z.string()).default([]),
+			list: z.array(z.string()).optional(),
+			primaryAction: actionSchema.optional(),
+			secondaryAction: actionSchema.optional(),
+			image: image().optional(),
+		});
+
+		const textBlockSchema = componentBaseSchema.extend({
+			type: z.literal("textBlock"),
+			heading: z.string().optional(),
+			body: z.array(z.string()).default([]),
+			list: z.array(z.string()).optional(),
+			listStyle: z.enum(["bullet", "number"]).default("bullet"),
+			afterList: z.array(z.string()).optional(),
+			image: image().optional(),
+		});
+
+		const cardGridSchema = componentBaseSchema.extend({
+			type: z.literal("cardGrid"),
+			eyebrow: z.string().optional(),
+			heading: z.string().optional(),
+			intro: z.string().optional(),
+			items: z
+				.array(
+					z.object({
+						title: z.string(),
+						description: z.string(),
+						list: z.array(z.string()).optional(),
+					}),
+				)
+				.default([]),
+			action: actionSchema.optional(),
+			image: image().optional(),
+		});
+
+		const stepListSchema = componentBaseSchema.extend({
+			type: z.literal("stepList"),
+			eyebrow: z.string().optional(),
+			heading: z.string().optional(),
+			intro: z.string().optional(),
+			steps: z
+				.array(
+					z.object({
+						title: z.string(),
+						description: z.string().optional(),
+						list: z.array(z.string()).optional(),
+					}),
+				)
+				.default([]),
+			action: actionSchema.optional(),
+			image: image().optional(),
+		});
+
+		const ctaSchema = componentBaseSchema.extend({
+			type: z.literal("cta"),
+			heading: z.string(),
+			text: z.array(z.string()).default([]),
+			primaryAction: actionSchema.optional(),
+			secondaryAction: actionSchema.optional(),
+			image: image().optional(),
+		});
+
+		return z.discriminatedUnion("type", [
+			heroSchema,
+			introSchema,
+			textBlockSchema,
+			cardGridSchema,
+			stepListSchema,
+			ctaSchema,
+			contactDetailsSchema,
+			contactFormSchema,
+			projectsListingSchema,
+			knowledgeListingSchema,
+		]);
+	},
 });
 
 /* -------------------------------------------------------------------------- */

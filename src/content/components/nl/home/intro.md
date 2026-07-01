@@ -4,6 +4,7 @@ type: intro
 language: nl
 page: home
 componentId: intro
+image: ../../../../assets/images/homepage/technology-as-a-means.png
 heading: Techniek moet ondersteunen
 body:
   - Software hoort geen extra onrust te veroorzaken.

@@ -4,6 +4,7 @@ type: intro
 language: en
 page: home
 componentId: intro
+image: ../../../../assets/images/homepage/technology-as-a-means.png
 heading: Technology should support people
 body:
   - Software should not create more noise.

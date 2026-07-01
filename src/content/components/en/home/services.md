@@ -4,6 +4,7 @@ type: cardGrid
 language: en
 page: home
 componentId: services
+image: ../../../../assets/images/homepage/services-overview.png
 heading: What EMVEE does
 action:
   label: View all services

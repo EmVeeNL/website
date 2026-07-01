@@ -1,4 +1,6 @@
 ---
+import type { ImageMetadata } from "astro";
+import { Image } from "astro:assets";
 import Icon from "./Icon.astro";
 
 type CtaAction = {
@@ -12,6 +14,7 @@ type CtaContent = {
 	text?: string[];
 	primaryAction?: CtaAction;
 	secondaryAction?: CtaAction;
+	image?: ImageMetadata;
 };
 
 type Props = {
@@ -22,7 +25,23 @@ const { cta } = Astro.props as Props;
 ---
 
 <section id={cta.componentId} data-reveal class="px-6 py-10 md:px-12 lg:px-20 lg:py-24">
-	<div class="mx-auto max-w-6xl rounded-3xl bg-background-subtle px-6 py-12 sm:px-12 sm:py-16 lg:px-16">
+	<div class="relative isolate mx-auto max-w-6xl overflow-hidden rounded-3xl bg-background-subtle px-6 py-12 sm:px-12 sm:py-16 lg:px-16">
+		{cta.image && (
+			<>
+				<Image
+					src={cta.image}
+					alt=""
+					width={1280}
+					height={720}
+					class="pointer-events-none absolute inset-0 -z-20 h-full w-full object-cover opacity-25"
+				/>
+				<div
+					aria-hidden="true"
+					class="absolute inset-0 -z-10 bg-[linear-gradient(90deg,var(--color-background-subtle)_20%,color-mix(in_oklch,var(--color-background-subtle)_55%,transparent)_100%)]"
+				></div>
+			</>
+		)}
+
 		<h2 class="max-w-[24ch] text-[clamp(1.75rem,5vw,2.75rem)] font-bold leading-[1.14] text-foreground">
 			{cta.heading}
 		</h2>

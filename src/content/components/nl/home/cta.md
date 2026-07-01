@@ -4,6 +4,7 @@ type: cta
 language: nl
 page: home
 componentId: cta
+image: ../../../../assets/images/homepage/first-conversation-cta.png
 heading: Laten we beginnen met begrijpen
 text:
   - Heb je een digitale vraag, een bestaande oplossing die niet meer past of een idee dat nog vorm moet krijgen?

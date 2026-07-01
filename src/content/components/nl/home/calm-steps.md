@@ -4,6 +4,7 @@ type: stepList
 language: nl
 page: home
 componentId: calm-steps
+image: ../../../../assets/images/homepage/process-preview.png
 heading: Rust in iedere fase
 intro: Een goed digitaal product ontstaat niet door zo snel mogelijk te beginnen. Het ontstaat door eerst duidelijkheid te creëren.
 action:

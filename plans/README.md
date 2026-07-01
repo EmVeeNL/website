@@ -5,7 +5,7 @@ links its tasks; task files are numbered `XX-<description>.md` within.
 
 0. [Project Foundations](00-project-foundations/index.md) — retroactive record
    of the Astro/Tailwind/fonts/layout setup that already existed before
-   planning started — **done**
+   planning started, plus the real footer and legal pages — **done**
 1. [Content Model & CMS](01-content-model-and-cms/index.md) — content
    schemas + Frontmatter CMS sync, including `projects`/`knowledge`
    collections — **done**
@@ -22,18 +22,23 @@ links its tasks; task files are numbered `XX-<description>.md` within.
    Static Assets, sitemap/SEO, CI deploy — **done**, live at
    https://emvee-website.frosty-hill-6079.workers.dev
 7. [Asset Production](07-asset-production/index.md) — generate and wire in
-   the images from `docs/image-prompts/` per page — **blocked**, no
-   image-generation tool is available in this environment; prompts are
-   ready whenever images get generated some other way
+   the images from `docs/image-prompts/` per page — **in progress, homepage
+   done**. Images have to be generated externally (no image-generation tool
+   is available in this environment) and then wired in from here — that
+   split now works end to end for the homepage.
 
 ## Current state
 
-Plans 00–06 are done. The site has 23 pages (6 nav pages × nl/en, a
-homepage, a 404, 4 project + 4 article placeholder detail pages, and 2
-listing pages), all content-collection driven, deployed, animated, with a
-working (not-yet-email-verified — needs a custom domain) contact form.
+Plans 00–06 are done. The site has 27 pages: 6 nav pages × nl/en, a
+homepage, a 404, 4 legal pages (privacy/terms × nl/en), 4 project + 4
+article placeholder detail pages, and 2 listing pages. All
+content-collection driven, deployed, animated, with a real footer, and a
+working (not-yet-email-verified — needs a custom domain) contact form. The
+homepage has real generated imagery; every other page still doesn't.
 
-Plan 07 (real images) is the only fully-blocked item. Everything else
-remaining is either genuinely optional polish or waiting on external input
-(a custom domain for the contact form to actually send email; real project
-case studies and knowledge articles to replace the placeholder entries).
+Remaining work is either genuinely optional polish or waiting on external
+input: more images for non-homepage pages (Plan 07, needs generation done
+outside this environment), a custom domain for the contact form to
+actually send email, real project case studies and knowledge articles to
+replace the placeholder entries, and legal review + real company details
+for the privacy/terms pages before they're ready to publish as final.
