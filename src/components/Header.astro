@@ -1,0 +1,156 @@
+---
+import logoDark from "../assets/images/logo-light.png";
+import logoLight from "../assets/images/logo-dark.png";
+import {
+	getLanguageForPath,
+	getLanguageSwitcherItems,
+	getNavigationItems,
+	getRoutePath,
+} from "../config/navigation";
+import DesktopNavigation from "./navigation/DesktopNavigation.astro";
+import MobileNavigation from "./navigation/MobileNavigation.astro";
+import Icon from "./Icon.astro";
+
+const currentPath = Astro.url.pathname;
+const activeLanguage = getLanguageForPath(currentPath);
+const navigationItems = getNavigationItems(activeLanguage, currentPath);
+const languageItems = getLanguageSwitcherItems(currentPath, activeLanguage);
+const homeHref = getRoutePath("home", activeLanguage);
+const contactHref = getRoutePath("contact", activeLanguage);
+---
+
+<header class="sticky top-0 z-50 border-b border-border-subtle bg-background/50 backdrop-blur">
+	<div class="mx-auto flex items-center justify-between gap-5 px-5 py-3 md:px-8 xl:px-20">
+		<a class="inline-flex min-h-11 w-fit items-center rounded-sm focus-visible:outline-offset-4" href={homeHref} aria-label="EMVEE home">
+			<img
+				class="h-9 w-auto dark:hidden lg:h-14"
+				src={logoDark.src}
+				alt="EMVEE"
+				width={128}
+				height={60}
+				loading="eager"
+				decoding="async"
+			/>
+			<img
+				class="hidden h-9 w-auto dark:block lg:h-14"
+				src={logoLight.src}
+				alt="EMVEE"
+				width={128}
+				height={60}
+				loading="eager"
+				decoding="async"
+			/>
+		</a>
+
+		<DesktopNavigation navigationItems={navigationItems} languageItems={languageItems} activeLanguage={activeLanguage} contactHref={contactHref}>
+			<Icon slot="theme-icons" name="moon-linear" size={20} class="theme-toggle__moon" />
+			<Icon slot="theme-icons" name="sun-2-linear" size={20} class="theme-toggle__sun hidden" />
+		</DesktopNavigation>
+
+		<MobileNavigation navigationItems={navigationItems} languageItems={languageItems} contactHref={contactHref}>
+			<Icon slot="theme-icons" name="moon-linear" size={19} class="theme-toggle__moon" />
+			<Icon slot="theme-icons" name="sun-2-linear" size={19} class="theme-toggle__sun hidden" />
+		</MobileNavigation>
+	</div>
+</header>
+
+<script>
+	const storageKey = "emvee-theme";
+	const root = document.documentElement;
+	const themeButtons = Array.from(document.querySelectorAll<HTMLButtonElement>("[data-theme-toggle]"));
+	const menuButton = document.querySelector<HTMLButtonElement>("[data-menu-toggle]");
+	const mobileMenu = document.querySelector<HTMLElement>("[data-mobile-menu]");
+	let menuReturnFocus: HTMLElement | null = null;
+
+	function getCurrentTheme() {
+		return root.dataset.theme === "dark" ? "dark" : "light";
+	}
+
+	function syncThemeButtons() {
+		const isDark = getCurrentTheme() === "dark";
+
+		for (const button of themeButtons) {
+			button.setAttribute("aria-pressed", String(isDark));
+			button.setAttribute("aria-label", isDark ? "Wissel naar light mode" : "Wissel naar dark mode");
+			button.querySelector(".theme-toggle__moon")?.classList.toggle("hidden", isDark);
+			button.querySelector(".theme-toggle__sun")?.classList.toggle("hidden", !isDark);
+		}
+	}
+
+	function applyTheme(theme: "light" | "dark") {
+		root.dataset.theme = theme;
+		localStorage.setItem(storageKey, theme);
+		syncThemeButtons();
+	}
+
+	function randomBetween(min: number, max: number) {
+		return Math.round(min + Math.random() * (max - min));
+	}
+
+	function prepareThemeSplashes() {
+		root.dataset.themeSplash = String(randomBetween(1, 3));
+		root.style.setProperty("--splash-x", `${randomBetween(24, 76)}vw`);
+		root.style.setProperty("--splash-y", `${randomBetween(24, 76)}vh`);
+	}
+
+	function setTheme(theme: "light" | "dark") {
+		const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+		if (prefersReducedMotion || !document.startViewTransition) {
+			applyTheme(theme);
+			return;
+		}
+
+		prepareThemeSplashes();
+		document.startViewTransition(() => applyTheme(theme));
+	}
+
+	function closeMenu() {
+		if (!menuButton || !mobileMenu || mobileMenu.hidden) return;
+
+		mobileMenu.hidden = true;
+		menuButton.setAttribute("aria-expanded", "false");
+		menuButton.setAttribute("aria-label", "Menu openen");
+		menuButton.querySelector(".menu-toggle__open")?.classList.remove("hidden");
+		menuButton.querySelector(".menu-toggle__close")?.classList.add("hidden");
+		menuReturnFocus?.focus();
+	}
+
+	function openMenu() {
+		if (!menuButton || !mobileMenu) return;
+
+		menuReturnFocus = document.activeElement instanceof HTMLElement ? document.activeElement : menuButton;
+		mobileMenu.hidden = false;
+		menuButton.setAttribute("aria-expanded", "true");
+		menuButton.setAttribute("aria-label", "Menu sluiten");
+		menuButton.querySelector(".menu-toggle__open")?.classList.add("hidden");
+		menuButton.querySelector(".menu-toggle__close")?.classList.remove("hidden");
+		mobileMenu.querySelector<HTMLElement>("a, button")?.focus();
+	}
+
+	syncThemeButtons();
+
+	for (const button of themeButtons) {
+		button.addEventListener("click", () => {
+			setTheme(getCurrentTheme() === "dark" ? "light" : "dark");
+		});
+	}
+
+	menuButton?.addEventListener("click", () => {
+		if (!mobileMenu) return;
+
+		if (mobileMenu.hidden) {
+			openMenu();
+		} else {
+			closeMenu();
+		}
+	});
+
+	document.addEventListener("keydown", (event) => {
+		if (event.key === "Escape") closeMenu();
+	});
+
+	mobileMenu?.addEventListener("click", (event) => {
+		if (event.target instanceof HTMLAnchorElement) closeMenu();
+	});
+</script>

@@ -1,0 +1,81 @@
+---
+import type { Language, LanguageSwitcherItem, NavigationItem } from "../../config/navigation";
+
+type Props = {
+	navigationItems: NavigationItem[];
+	languageItems: LanguageSwitcherItem[];
+	activeLanguage: Language;
+	contactHref: string;
+};
+
+const { navigationItems, languageItems, contactHref } = Astro.props as Props;
+---
+
+<div class="hidden items-center gap-7 lg:flex">
+	<nav aria-label="Hoofdnavigatie">
+		<ul class="flex items-center gap-x-1 text-sm text-foreground">
+			{
+				navigationItems.map((item) => {
+					const linkClass = [
+						"inline-flex min-h-11 items-center rounded-full px-3 text-[0.9rem] uppercase transition-colors duration-150",
+						item.isActive ? "text-accent" : "text-foreground-muted hover:text-foreground",
+					].join(" ");
+
+					return (
+						<li>
+							<a class={linkClass} href={item.href} aria-current={item.isActive ? "page" : undefined}>
+								{item.label}
+							</a>
+						</li>
+					);
+				})
+			}
+		</ul>
+	</nav>
+
+	<div class="flex items-center gap-3">
+		<nav aria-label="Taalkeuze" class="flex min-h-11 items-center rounded-full border border-border-subtle px-1 text-xs">
+			{
+				languageItems.map((item, index) => {
+					const itemClass = [
+						"inline-flex min-h-8 min-w-8 items-center justify-center rounded-full px-2 transition-colors duration-150",
+						item.isActive ? "bg-accent-subtle text-accent-hover dark:text-accent" : "text-foreground-subtle hover:text-foreground",
+						!item.available ? "cursor-not-allowed opacity-45" : "",
+					].join(" ");
+
+					return (
+						<>
+							{item.available ? (
+								<a class={itemClass} href={item.href} lang={item.lang} hreflang={item.lang} data-lang-switch aria-current={item.isActive ? "true" : undefined}>
+									{item.label}
+								</a>
+							) : (
+								<span class={itemClass} lang={item.lang} aria-disabled="true">
+									{item.label}
+								</span>
+							)}
+							{index === 0 && <span class="px-1 text-border-strong" aria-hidden="true">/</span>}
+						</>
+					);
+				})
+			}
+		</nav>
+
+		<button
+			type="button"
+			class="inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border border-border-subtle text-foreground-muted transition-colors duration-150 hover:border-border-strong hover:text-foreground"
+			aria-label="Wissel naar dark mode"
+			aria-pressed="false"
+			data-theme-toggle
+		>
+			<slot name="theme-icons" />
+		</button>
+
+		<a
+			href={contactHref}
+			class="cta-gradient inline-flex min-h-11 w-fit items-center rounded-full px-5 py-2 text-sm font-bold uppercase text-accent-foreground no-underline"
+		>
+			Plan een gesprek
+		</a>
+	</div>
+</div>
