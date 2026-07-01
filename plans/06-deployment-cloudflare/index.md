@@ -1,7 +1,16 @@
 ---
 plan: 06-deployment-cloudflare
-status: planned
+status: live, CI pending CLOUDFLARE_API_TOKEN secret
 ---
+
+## Status
+
+Live at https://emvee-website.frosty-hill-6079.workers.dev (deployed
+manually via `wrangler deploy` 2026-07-01). Sitemap, robots.txt, canonical
+URLs, and hreflang are all wired up. GitHub Actions workflows for automatic
+deploy-on-push and PR previews exist but are untested end-to-end — see
+[Task 03](03-set-up-deploy-workflow.md) for the one manual step (adding
+`CLOUDFLARE_API_TOKEN` as a repo secret) still needed to activate them.
 
 # Plan 06: Deployment (Cloudflare)
 

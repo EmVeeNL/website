@@ -1,7 +1,7 @@
 ---
 task: 02-add-sitemap-robots-and-seo-defaults
 plan: 06-deployment-cloudflare
-status: planned
+status: done
 ---
 
 # Task: Add sitemap, robots.txt, and SEO defaults
@@ -13,15 +13,15 @@ are correctly wired end-to-end before going live.
 
 ## Steps
 
-- [ ] `npx astro add sitemap` (requires `site` to be set in `astro.config.mjs`
+- [x] `npx astro add sitemap` (requires `site` to be set in `astro.config.mjs`
       — set it to the real production domain once known)
-- [ ] Add `public/robots.txt` referencing the sitemap URL
-- [ ] Confirm every page's `seo.title`/`seo.description`/`seo.canonical`
+- [x] Add `public/robots.txt` referencing the sitemap URL
+- [x] Confirm every page's `seo.title`/`seo.description`/`seo.canonical`
       (schema already exists on the `pages` collection in
       `src/content.config.ts`) is actually rendered into `<head>` — check
       `BaseLayout.astro` currently only takes `title`/`description` props,
       not `canonical` or `noindex`; extend it to use those fields
-- [ ] Add `hreflang` alternate links between `nl`/`en` versions of the same
+- [x] Add `hreflang` alternate links between `nl`/`en` versions of the same
       page, using `getLanguageSwitcherItems` from `src/config/navigation.ts`
       as the source of truth for which URL maps to which language
 

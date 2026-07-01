@@ -8,6 +8,7 @@ import Intro from "./Intro.astro";
 import StepList from "./StepList.astro";
 import TextBlock from "./TextBlock.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { defaultLanguage, getLanguageSwitcherItems } from "../config/navigation";
 
 type Props = {
 	page: CollectionEntry<"pages">;
@@ -16,6 +17,19 @@ type Props = {
 const { page } = Astro.props as Props;
 
 const componentEntries = await getCollection("components");
+
+const languageItems = getLanguageSwitcherItems(Astro.url.pathname, page.data.language);
+const alternates = languageItems
+	.filter((item) => item.available)
+	.map((item) => ({ lang: item.lang, href: new URL(item.href, Astro.site).toString() }));
+const defaultAlternate = languageItems.find((item) => item.lang === defaultLanguage);
+
+if (defaultAlternate) {
+	alternates.push({ lang: "x-default", href: new URL(defaultAlternate.href, Astro.site).toString() });
+}
+
+const canonicalPath = page.data.seo?.canonical ?? page.data.slug;
+const canonical = new URL(canonicalPath, Astro.site).toString();
 
 const components = page.data.components
 	.toSorted((a, b) => (a.order ?? 0) - (b.order ?? 0))
@@ -36,9 +50,17 @@ for (const component of components) {
 
 const title = page.data.seo?.title ?? page.data.title;
 const description = page.data.seo?.description ?? page.data.description;
+const noindex = page.data.seo?.noindex ?? false;
 ---
 
-<BaseLayout title={title} description={description} lang={page.data.language}>
+<BaseLayout
+	title={title}
+	description={description}
+	lang={page.data.language}
+	canonical={canonical}
+	noindex={noindex}
+	alternates={alternates}
+>
 	{
 		components.map(({ config, entry }) => {
 			if (!entry) return null;

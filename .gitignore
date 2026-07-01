@@ -5,6 +5,9 @@ dist/
 # wrangler local state
 .wrangler/
 
+# Claude Code local session state
+.claude/
+
 # dependencies
 node_modules/
 
