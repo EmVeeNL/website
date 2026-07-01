@@ -35,6 +35,6 @@ Six generic, reusable section component types cover every page's real content (d
 
 `Hero.astro` and the two `hero.md` content files (`src/content/components/{nl,en}/home/hero.md`) are the one deliberately untouched piece — every other homepage section was added after it.
 
-The dynamic catch-all route refactor described in `plans/02-routing-architecture/` has **not** landed yet — pages are still one `.astro` file per language per page (matching `src/pages/index.astro`'s pattern), so a new page currently means a new route file, not just new content.
+Routing is a single dynamic catch-all (`src/pages/[...slug].astro`, `getStaticPaths()` over the `pages` collection) rendered through `src/components/PageRenderer.astro` — adding a new page needs only a new `pages` collection entry + its component entries, never a new route file.
 
 **Known state:** home, services, process, projects, about, and contact (nl+en, 12 pages total) are implemented and `pnpm build` passes. Knowledge/Kennis has no real content yet and isn't started (see `plans/04-page-rollout-nl-en`).

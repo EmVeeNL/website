@@ -1,6 +1,6 @@
 ---
 plan: 02-routing-architecture
-status: planned
+status: done
 ---
 
 # Plan 02: Routing Architecture
