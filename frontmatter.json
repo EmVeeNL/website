@@ -37,7 +37,9 @@
         "stepList",
         "cta",
         "contactDetails",
-        "contactForm"
+        "contactForm",
+        "projectsListing",
+        "knowledgeListing"
       ],
       "defaultLocale": "en"
     },
@@ -52,7 +54,41 @@
         "stepList",
         "cta",
         "contactDetails",
-        "contactForm"
+        "contactForm",
+        "projectsListing",
+        "knowledgeListing"
+      ],
+      "defaultLocale": "nl"
+    },
+    {
+      "title": "Projects (English)",
+      "path": "[[workspace]]/src/content/projects/en",
+      "contentTypes": [
+        "project"
+      ],
+      "defaultLocale": "en"
+    },
+    {
+      "title": "Projects (Dutch)",
+      "path": "[[workspace]]/src/content/projects/nl",
+      "contentTypes": [
+        "project"
+      ],
+      "defaultLocale": "nl"
+    },
+    {
+      "title": "Knowledge (English)",
+      "path": "[[workspace]]/src/content/knowledge/en",
+      "contentTypes": [
+        "article"
+      ],
+      "defaultLocale": "en"
+    },
+    {
+      "title": "Knowledge (Dutch)",
+      "path": "[[workspace]]/src/content/knowledge/nl",
+      "contentTypes": [
+        "article"
       ],
       "defaultLocale": "nl"
     }
@@ -881,6 +917,292 @@
         {
           "title": "Error message",
           "name": "errorMessage",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "project",
+      "pageBundle": false,
+      "fields": [
+        {
+          "title": "Title",
+          "name": "title",
+          "type": "string",
+          "required": true
+        },
+        {
+          "title": "Slug",
+          "name": "slug",
+          "type": "string",
+          "required": true
+        },
+        {
+          "title": "Language",
+          "name": "language",
+          "type": "choice",
+          "choices": [
+            "nl",
+            "en"
+          ],
+          "required": true
+        },
+        {
+          "title": "Summary",
+          "name": "summary",
+          "type": "string",
+          "single": false,
+          "required": true
+        },
+        {
+          "title": "Client",
+          "name": "client",
+          "type": "string"
+        },
+        {
+          "title": "Year",
+          "name": "year",
+          "type": "number"
+        },
+        {
+          "title": "Cover",
+          "name": "cover",
+          "type": "image"
+        },
+        {
+          "title": "Tags",
+          "name": "tags",
+          "type": "list"
+        },
+        {
+          "title": "Status",
+          "name": "status",
+          "type": "choice",
+          "choices": [
+            "Draft",
+            "Published"
+          ],
+          "default": "Draft"
+        },
+        {
+          "title": "SEO",
+          "name": "seo",
+          "type": "fields",
+          "fields": [
+            {
+              "title": "SEO Title",
+              "name": "title",
+              "type": "string"
+            },
+            {
+              "title": "SEO Description",
+              "name": "description",
+              "type": "string",
+              "single": false
+            },
+            {
+              "title": "Canonical URL",
+              "name": "canonical",
+              "type": "string"
+            },
+            {
+              "title": "Noindex",
+              "name": "noindex",
+              "type": "boolean",
+              "default": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "article",
+      "pageBundle": false,
+      "fields": [
+        {
+          "title": "Title",
+          "name": "title",
+          "type": "string",
+          "required": true
+        },
+        {
+          "title": "Slug",
+          "name": "slug",
+          "type": "string",
+          "required": true
+        },
+        {
+          "title": "Language",
+          "name": "language",
+          "type": "choice",
+          "choices": [
+            "nl",
+            "en"
+          ],
+          "required": true
+        },
+        {
+          "title": "Excerpt",
+          "name": "excerpt",
+          "type": "string",
+          "single": false,
+          "required": true
+        },
+        {
+          "title": "Published at",
+          "name": "publishedAt",
+          "type": "datetime",
+          "required": true
+        },
+        {
+          "title": "Cover",
+          "name": "cover",
+          "type": "image"
+        },
+        {
+          "title": "Tags",
+          "name": "tags",
+          "type": "list"
+        },
+        {
+          "title": "Status",
+          "name": "status",
+          "type": "choice",
+          "choices": [
+            "Draft",
+            "Published"
+          ],
+          "default": "Draft"
+        },
+        {
+          "title": "SEO",
+          "name": "seo",
+          "type": "fields",
+          "fields": [
+            {
+              "title": "SEO Title",
+              "name": "title",
+              "type": "string"
+            },
+            {
+              "title": "SEO Description",
+              "name": "description",
+              "type": "string",
+              "single": false
+            },
+            {
+              "title": "Canonical URL",
+              "name": "canonical",
+              "type": "string"
+            },
+            {
+              "title": "Noindex",
+              "name": "noindex",
+              "type": "boolean",
+              "default": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "projectsListing",
+      "pageBundle": false,
+      "fields": [
+        {
+          "title": "Title",
+          "name": "title",
+          "type": "string",
+          "required": true
+        },
+        {
+          "title": "Type",
+          "name": "type",
+          "type": "string",
+          "default": "projectsListing",
+          "required": true
+        },
+        {
+          "title": "Language",
+          "name": "language",
+          "type": "choice",
+          "choices": [
+            "nl",
+            "en"
+          ],
+          "required": true
+        },
+        {
+          "title": "Page",
+          "name": "page",
+          "type": "string",
+          "required": true
+        },
+        {
+          "title": "Component ID",
+          "name": "componentId",
+          "type": "string",
+          "required": true
+        },
+        {
+          "title": "Heading",
+          "name": "heading",
+          "type": "string"
+        },
+        {
+          "title": "Intro",
+          "name": "intro",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "knowledgeListing",
+      "pageBundle": false,
+      "fields": [
+        {
+          "title": "Title",
+          "name": "title",
+          "type": "string",
+          "required": true
+        },
+        {
+          "title": "Type",
+          "name": "type",
+          "type": "string",
+          "default": "knowledgeListing",
+          "required": true
+        },
+        {
+          "title": "Language",
+          "name": "language",
+          "type": "choice",
+          "choices": [
+            "nl",
+            "en"
+          ],
+          "required": true
+        },
+        {
+          "title": "Page",
+          "name": "page",
+          "type": "string",
+          "required": true
+        },
+        {
+          "title": "Component ID",
+          "name": "componentId",
+          "type": "string",
+          "required": true
+        },
+        {
+          "title": "Heading",
+          "name": "heading",
+          "type": "string"
+        },
+        {
+          "title": "Intro",
+          "name": "intro",
           "type": "string"
         }
       ]

@@ -1,6 +1,6 @@
 ---
 plan: 03-component-library
-status: superseded
+status: done
 ---
 
 # Plan 03: Component Library
@@ -27,9 +27,9 @@ status: superseded
 > - `ContactDetails.astro` — email/phone/location block (new, not in the
 >   original list — needed once the real Contact page content was read)
 >
-> `ContactForm.astro` (originally task 5) and the Knowledge/Projects
-> **collection + detail-page** work (originally tasks 4 and 6) are still
-> real, still-open work — see the note at the bottom of this file.
+> `ContactForm.astro` (task 5) and the Knowledge/Projects collection +
+> detail-page work (tasks 4 and 6) were real, separate work — now also done,
+> see the note at the bottom of this file.
 
 ## Objective
 
@@ -56,9 +56,9 @@ accessibility conventions already established by `Hero.astro`.
 1. ~~Build Features section component~~ → `CardGrid.astro`
 2. [Build CTA section component](02-build-cta-section-component.md) — still accurate, now called `Cta.astro`
 3. ~~Build Testimonials section component~~ → not needed by any real page yet; revisit if content requires it
-4. [Build Projects grid & card components](04-build-projects-grid-and-card-components.md) — still open: the `projects` *collection* (with detail pages) is separate from the `cardGrid` component used for the Projecten listing page's case-structure explainer
+4. [Build Projects grid & card components](04-build-projects-grid-and-card-components.md) — done, alongside the `projects` collection and its detail pages
 5. [Build Contact form component](05-build-contact-form-component.md) — done; built as a same-origin Worker endpoint using Cloudflare Email Service, blocked on a custom domain for actually sending email (see that task for details)
-6. [Build Knowledge article list & card components](06-build-knowledge-article-list-and-card-components.md) — still open, no real content exists for Kennis yet
+6. [Build Knowledge article list & card components](06-build-knowledge-article-list-and-card-components.md) — done, alongside the `knowledge` collection, its detail pages, and the previously-nonexistent Kennis/Knowledge pages
 7. ~~Build About intro component~~ → `Intro.astro` (made generic, used by every page)
 
 ## Out of scope

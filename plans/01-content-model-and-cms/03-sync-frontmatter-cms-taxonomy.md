@@ -1,7 +1,7 @@
 ---
 task: 03-sync-frontmatter-cms-taxonomy
 plan: 01-content-model-and-cms
-status: done (component types); projects/knowledge deferred
+status: done
 ---
 
 # Task: Sync Frontmatter CMS taxonomy
@@ -34,10 +34,10 @@ already done correctly for `page`, `component`/`hero`).
 - [x] Removed the old generic `component` content type — it never matched
       any real file (`type` is always a concrete value like `"hero"` or
       `"intro"`) and was dead weight
-- [ ] Add `pageFolders` entries for the `projects` and `knowledge`
-      collections — **deferred**, those collections don't exist yet (see
-      [Plan 01, Task 02](02-design-projects-and-knowledge-collections.md),
-      still `planned`). Revisit this task once that one lands.
+- [x] Added `pageFolders` entries for the `projects` and `knowledge`
+      collections (now that [Task 02](02-design-projects-and-knowledge-collections.md)
+      landed), plus their `project`/`article` content types and the two new
+      `projectsListing`/`knowledgeListing` component anchor types
 - [ ] Open each folder in the Frontmatter panel and confirm the generated
       form matches the schema (no missing/extra fields) — **needs a human
       with the Frontmatter VS Code extension installed to verify**; the

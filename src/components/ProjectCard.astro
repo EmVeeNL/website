@@ -1,0 +1,46 @@
+---
+import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+
+type Props = {
+	project: CollectionEntry<"projects">;
+	href: string;
+};
+
+const { project, href } = Astro.props as Props;
+const { title, summary, client, year, cover, tags } = project.data;
+const meta = [client, year].filter(Boolean).join(" · ");
+---
+
+<a
+	href={href}
+	class="group flex flex-col overflow-hidden rounded-2xl border border-border-subtle bg-background-subtle transition-colors duration-150 hover:border-border-strong"
+>
+	{cover && (
+		<Image
+			src={cover}
+			alt=""
+			width={640}
+			height={360}
+			class="aspect-video w-full object-cover"
+		/>
+	)}
+
+	<div class="flex flex-1 flex-col p-6">
+		{meta && <p class="text-[0.8125rem] font-bold uppercase tracking-[0.08em] text-foreground-subtle">{meta}</p>}
+
+		<h3 class="mt-2 text-lg font-bold leading-[1.22] text-foreground group-hover:text-accent">{title}</h3>
+
+		<p class="mt-3 text-[0.9375rem] leading-6 text-foreground-muted">{summary}</p>
+
+		{tags?.length ? (
+			<ul class="mt-4 flex flex-wrap gap-2">
+				{tags.map((tag) => (
+					<li class="rounded-full bg-accent-subtle px-3 py-1 text-[0.75rem] font-bold uppercase tracking-[0.04em] text-accent-hover dark:text-accent">
+						{tag}
+					</li>
+				))}
+			</ul>
+		) : null}
+	</div>
+</a>

@@ -1,0 +1,27 @@
+---
+import { getCollection, render } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import ProjectDetail from "../../components/ProjectDetail.astro";
+import { getRoutePath } from "../../config/navigation";
+
+export async function getStaticPaths() {
+	const projects = await getCollection("projects", (entry) => entry.data.language === "nl");
+
+	return Promise.all(
+		projects.map(async (project) => ({
+			params: { slug: project.data.slug },
+			props: { project, ...(await render(project)) },
+		})),
+	);
+}
+
+const { project, Content } = Astro.props;
+const title = project.data.seo?.title ?? project.data.title;
+const description = project.data.seo?.description ?? project.data.summary;
+---
+
+<BaseLayout title={title} description={description} lang="nl" noindex={project.data.seo?.noindex ?? false}>
+	<ProjectDetail project={project} backHref={getRoutePath("projects", "nl")} backLabel="Alle projecten">
+		<Content />
+	</ProjectDetail>
+</BaseLayout>

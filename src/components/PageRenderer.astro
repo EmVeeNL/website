@@ -1,15 +1,17 @@
 ---
 import { getCollection, type CollectionEntry } from "astro:content";
+import ArticleList from "./ArticleList.astro";
 import CardGrid from "./CardGrid.astro";
 import ContactDetails from "./ContactDetails.astro";
 import ContactForm from "./ContactForm.astro";
 import Cta from "./Cta.astro";
 import Hero from "./Hero.astro";
 import Intro from "./Intro.astro";
+import ProjectsGrid from "./ProjectsGrid.astro";
 import StepList from "./StepList.astro";
 import TextBlock from "./TextBlock.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { defaultLanguage, getLanguageSwitcherItems } from "../config/navigation";
+import { defaultLanguage, getLanguageSwitcherItems, getRoutePath } from "../config/navigation";
 
 type Props = {
 	page: CollectionEntry<"pages">;
@@ -18,6 +20,10 @@ type Props = {
 const { page } = Astro.props as Props;
 
 const componentEntries = await getCollection("components");
+const projectEntries = await getCollection("projects", (entry) => entry.data.language === page.data.language);
+const knowledgeEntries = await getCollection("knowledge", (entry) => entry.data.language === page.data.language);
+const projectsBasePath = getRoutePath("projects", page.data.language);
+const knowledgeBasePath = getRoutePath("knowledge", page.data.language);
 
 const languageItems = getLanguageSwitcherItems(Astro.url.pathname, page.data.language);
 const alternates = languageItems
@@ -96,6 +102,30 @@ const noindex = page.data.seo?.noindex ?? false;
 
 			if (config.type === "contactForm") {
 				return <ContactForm form={entry.data} />;
+			}
+
+			if (config.type === "projectsListing") {
+				return (
+					<ProjectsGrid
+						componentId={entry.data.componentId}
+						heading={entry.data.heading}
+						intro={entry.data.intro}
+						projects={projectEntries}
+						basePath={projectsBasePath}
+					/>
+				);
+			}
+
+			if (config.type === "knowledgeListing") {
+				return (
+					<ArticleList
+						componentId={entry.data.componentId}
+						heading={entry.data.heading}
+						intro={entry.data.intro}
+						articles={knowledgeEntries}
+						basePath={knowledgeBasePath}
+					/>
+				);
 			}
 
 			return null;
