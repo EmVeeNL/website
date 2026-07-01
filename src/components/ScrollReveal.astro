@@ -1,0 +1,37 @@
+---
+---
+
+<script>
+	// One shared reveal script for every [data-reveal] section, instead of
+	// duplicating Motion calls per component — see the pattern note in
+	// Header.astro's <script> for the general Motion usage convention.
+	//
+	// Initial hidden state is set here at runtime, not via CSS, so content
+	// stays visible by default if this script never loads (progressive
+	// enhancement — matches how the rest of the site treats motion as an
+	// enhancement, not a requirement).
+	import { animate, inView } from "motion";
+
+	const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+	if (!prefersReducedMotion) {
+		const elements = document.querySelectorAll<HTMLElement>("[data-reveal]");
+
+		for (const element of elements) {
+			element.style.opacity = "0";
+			element.style.transform = "translateY(16px)";
+
+			inView(
+				element,
+				() => {
+					animate(
+						element,
+						{ opacity: 1, transform: "translateY(0px)" },
+						{ duration: 0.5, easing: "ease-out" },
+					);
+				},
+				{ margin: "0px 0px -10% 0px" },
+			);
+		}
+	}
+</script>

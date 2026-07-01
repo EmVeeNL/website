@@ -21,7 +21,7 @@ type Props = {
 const { cta } = Astro.props as Props;
 ---
 
-<section id={cta.componentId} class="px-6 py-10 md:px-12 lg:px-20 lg:py-24">
+<section id={cta.componentId} data-reveal class="px-6 py-10 md:px-12 lg:px-20 lg:py-24">
 	<div class="mx-auto max-w-6xl rounded-3xl bg-background-subtle px-6 py-12 sm:px-12 sm:py-16 lg:px-16">
 		<h2 class="max-w-[24ch] text-[clamp(1.75rem,5vw,2.75rem)] font-bold leading-[1.14] text-foreground">
 			{cta.heading}

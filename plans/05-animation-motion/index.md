@@ -1,6 +1,6 @@
 ---
 plan: 05-animation-motion
-status: planned
+status: done
 ---
 
 # Plan 05: Animation (Motion)
