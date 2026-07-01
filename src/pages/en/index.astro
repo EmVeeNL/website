@@ -1,20 +1,20 @@
 ---
 import { getCollection } from "astro:content";
-import CardGrid from "../components/CardGrid.astro";
-import ContactDetails from "../components/ContactDetails.astro";
-import Cta from "../components/Cta.astro";
-import Hero from "../components/Hero.astro";
-import Intro from "../components/Intro.astro";
-import StepList from "../components/StepList.astro";
-import TextBlock from "../components/TextBlock.astro";
-import BaseLayout from "../layouts/BaseLayout.astro";
+import CardGrid from "../../components/CardGrid.astro";
+import ContactDetails from "../../components/ContactDetails.astro";
+import Cta from "../../components/Cta.astro";
+import Hero from "../../components/Hero.astro";
+import Intro from "../../components/Intro.astro";
+import StepList from "../../components/StepList.astro";
+import TextBlock from "../../components/TextBlock.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
 
 const pages = await getCollection("pages");
 const componentEntries = await getCollection("components");
-const page = pages.find((entry) => entry.data.language === "nl" && entry.data.slug === "/");
+const page = pages.find((entry) => entry.data.language === "en" && entry.data.slug === "/en");
 
 if (!page) {
-	throw new Error("Missing content entry: pages/nl/home");
+	throw new Error("Missing content entry: pages/en/home");
 }
 
 const components = page.data.components
