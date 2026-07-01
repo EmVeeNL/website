@@ -64,6 +64,17 @@ export default defineConfig({
 			subsets: ['latin'],
 			fallbacks: ['SFMono-Regular', 'Consolas', 'monospace'],
 		},
+		{
+			// Restrained editorial accent only — see DESIGN_SYSTEM.md's Lora
+			// usage rules (short brand statements, not body copy or UI text).
+			provider: fontProviders.fontsource(),
+			name: 'Lora',
+			cssVariable: '--font-lora',
+			weights: [400, 500],
+			styles: ['normal', 'italic'],
+			subsets: ['latin'],
+			fallbacks: ['Georgia', 'serif'],
+		},
 	],
 	vite: {
 		plugins: [tailwindcss()],

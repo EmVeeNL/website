@@ -1,4 +1,5 @@
 ---
+import { getImage } from "astro:assets";
 import { getCollection, render, type CollectionEntry } from "astro:content";
 import ArticleList from "./ArticleList.astro";
 import CardGrid from "./CardGrid.astro";
@@ -59,6 +60,10 @@ const title = page.data.seo?.title ?? page.data.title;
 const description = page.data.seo?.description ?? page.data.description;
 const noindex = page.data.seo?.noindex ?? false;
 
+const ogImage = page.data.ogImage
+	? new URL((await getImage({ src: page.data.ogImage, width: 1200, height: 630 })).src, Astro.site).toString()
+	: undefined;
+
 // Pages with no components[] (e.g. legal pages) render their own markdown
 // body directly instead of being composed from section components — long-form
 // prose like a privacy policy doesn't decompose into intro/textBlock/cardGrid
@@ -73,6 +78,7 @@ const { Content } = page.data.components.length === 0 ? await render(page) : { C
 	canonical={canonical}
 	noindex={noindex}
 	alternates={alternates}
+	ogImage={ogImage}
 >
 	{
 		Content && (

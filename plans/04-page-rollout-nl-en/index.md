@@ -44,6 +44,7 @@ Only `home` existed before this pass (`src/content/pages/nl/home.md`,
 4. [About page](04-about-page.md)
 5. [Knowledge page](05-knowledge-page.md)
 6. [Contact page](06-contact-page.md)
+7. [Homepage content, UX and SEO rework](07-homepage-content-seo.md)
 
 ## Sequencing note
 

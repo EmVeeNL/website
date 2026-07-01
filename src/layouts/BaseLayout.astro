@@ -20,6 +20,8 @@ type Props = {
 	alternates?: HreflangAlternate[];
 	bodyClass?: string;
 	mainClass?: string;
+	/** Absolute URL. Pages without a real image simply omit og:image/twitter:image. */
+	ogImage?: string;
 };
 
 const {
@@ -31,7 +33,38 @@ const {
 	alternates,
 	bodyClass,
 	mainClass,
+	ogImage,
 } = Astro.props as Props;
+
+const ogLocale = lang === "en" ? "en_US" : "nl_NL";
+
+// Organization/WebSite facts kept deliberately minimal — only what's already
+// public elsewhere on the site (see src/content/components/*/contact/details.md).
+// No phone/email/sameAs here: the real ones aren't set yet (see AGENTS.md).
+const organizationJsonLd = {
+	"@context": "https://schema.org",
+	"@type": "ProfessionalService",
+	name: "EMVEE",
+	url: Astro.site?.toString(),
+	logo: new URL("/favicon.svg", Astro.site).toString(),
+	description: "EMVEE ontwerpt en bouwt websites, webapplicaties en e-commerce met aandacht voor duidelijkheid, kwaliteit en persoonlijk contact.",
+	address: {
+		"@type": "PostalAddress",
+		addressLocality: "Mook",
+		addressCountry: "NL",
+	},
+	areaServed: {
+		"@type": "Country",
+		name: "Netherlands",
+	},
+};
+
+const websiteJsonLd = {
+	"@context": "https://schema.org",
+	"@type": "WebSite",
+	name: "EMVEE",
+	url: Astro.site?.toString(),
+};
 ---
 
 <!doctype html>
@@ -60,6 +93,25 @@ const {
 		{alternates?.map((alternate) => <link rel="alternate" hreflang={alternate.lang} href={alternate.href} />)}
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" href="/favicon.ico" sizes="any" />
+
+		<meta property="og:site_name" content="EMVEE" />
+		<meta property="og:type" content="website" />
+		<meta property="og:locale" content={ogLocale} />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		{canonical && <meta property="og:url" content={canonical} />}
+		{ogImage && <meta property="og:image" content={ogImage} />}
+		<meta name="twitter:card" content={ogImage ? "summary_large_image" : "summary"} />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description} />
+		{ogImage && <meta name="twitter:image" content={ogImage} />}
+
+		{!noindex && (
+			<>
+				<script type="application/ld+json" set:html={JSON.stringify(organizationJsonLd)} />
+				<script type="application/ld+json" set:html={JSON.stringify(websiteJsonLd)} />
+			</>
+		)}
 		<Font
 			cssVariable="--font-chocopie"
 			preload={[
@@ -70,6 +122,7 @@ const {
 		/>
 		<Font cssVariable="--font-geist" preload={[{ weight: 400, style: "normal", subset: "latin" }]} />
 		<Font cssVariable="--font-geist-mono" preload={false} />
+		<Font cssVariable="--font-lora" preload={false} />
 		<title>{title}</title>
 		<slot name="head" />
 	</head>
