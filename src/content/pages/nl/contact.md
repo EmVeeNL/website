@@ -24,18 +24,22 @@ components:
     type: textBlock
     ref: nl/contact/what-helps
     order: 3
+  - id: form
+    type: contactForm
+    ref: nl/contact/form
+    order: 4
   - id: details
     type: contactDetails
     ref: nl/contact/details
-    order: 4
+    order: 5
   - id: next-steps
     type: textBlock
     ref: nl/contact/next-steps
-    order: 5
+    order: 6
   - id: no-fit
     type: textBlock
     ref: nl/contact/no-fit
-    order: 6
+    order: 7
 ---
 
 ## Start writing

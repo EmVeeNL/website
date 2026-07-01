@@ -1,7 +1,7 @@
 ---
 task: 03-sync-frontmatter-cms-taxonomy
 plan: 01-content-model-and-cms
-status: planned
+status: done (component types); projects/knowledge deferred
 ---
 
 # Task: Sync Frontmatter CMS taxonomy
@@ -21,20 +21,29 @@ already done correctly for `page`, `component`/`hero`).
 
 ## Steps
 
-- [ ] For each new component type (features, process, cta, testimonials,
-      stats): add a `contentTypes` entry in `frontmatter.json` matching the
-      Zod fields, and register it in the relevant `pageFolders` entries under
-      `contentTypes: [...]` (both `en` and `nl` folders)
-- [ ] Add `pageFolders` entries for the new `projects` and `knowledge`
-      collections (`src/content/projects/en`, `/nl`, `src/content/knowledge/en`, `/nl`)
-      with their own content type definitions
-- [ ] Verify `frontMatter.taxonomy.contentTypeField` (`"type"`) still applies
-      cleanly — projects/knowledge don't have a `type` discriminant like
-      components do, so check whether Frontmatter needs a per-folder content
-      type instead (it does — `pageFolders[].contentTypes` already scopes types
-      per folder, so this should just work)
+- [x] For each of the six real component types (`intro`, `textBlock`,
+      `cardGrid`, `stepList`, `cta`, `contactDetails` — see
+      [Plan 01, Task 01](01-design-remaining-section-component-schemas.md)
+      for why these replaced the originally-guessed `features`/`process`/
+      `testimonials`/`stats` list): added a `contentTypes` entry in
+      `frontmatter.json` matching the Zod fields exactly, including the
+      `cardGridItem`/`stepListStep` field groups for the array-of-objects
+      fields (`items`, `steps`)
+- [x] Registered all six (plus the existing `hero`) in both `Components
+      (English)` and `Components (Dutch)` `pageFolders` entries
+- [x] Removed the old generic `component` content type — it never matched
+      any real file (`type` is always a concrete value like `"hero"` or
+      `"intro"`) and was dead weight
+- [ ] Add `pageFolders` entries for the `projects` and `knowledge`
+      collections — **deferred**, those collections don't exist yet (see
+      [Plan 01, Task 02](02-design-projects-and-knowledge-collections.md),
+      still `planned`). Revisit this task once that one lands.
 - [ ] Open each folder in the Frontmatter panel and confirm the generated
-      form matches the schema (no missing/extra fields)
+      form matches the schema (no missing/extra fields) — **needs a human
+      with the Frontmatter VS Code extension installed to verify**; the
+      JSON was validated for syntax and cross-checked field-by-field
+      against `src/content.config.ts`, but the actual editor UI hasn't been
+      opened
 
 ## Acceptance criteria
 

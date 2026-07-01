@@ -151,6 +151,28 @@ const contactDetailsSchema = componentBaseSchema.extend({
 	note: z.string().optional(),
 });
 
+const contactFormSchema = componentBaseSchema.extend({
+	type: z.literal("contactForm"),
+	heading: z.string().optional(),
+	fields: z.object({
+		name: z.string(),
+		organisation: z.string(),
+		email: z.string(),
+		phone: z.string(),
+		subject: z.string(),
+		message: z.string(),
+	}),
+	optionalLabel: z.string(),
+	consent: z.object({
+		before: z.string().optional(),
+		link: actionSchema,
+		after: z.string().optional(),
+	}),
+	submitLabel: z.string(),
+	successMessage: z.string(),
+	errorMessage: z.string(),
+});
+
 const componentSchema = z.discriminatedUnion("type", [
 	heroSchema,
 	introSchema,
@@ -159,6 +181,7 @@ const componentSchema = z.discriminatedUnion("type", [
 	stepListSchema,
 	ctaSchema,
 	contactDetailsSchema,
+	contactFormSchema,
 ]);
 
 const components = defineCollection({
