@@ -57,7 +57,7 @@ accessibility conventions already established by `Hero.astro`.
 2. [Build CTA section component](02-build-cta-section-component.md) — still accurate, now called `Cta.astro`
 3. ~~Build Testimonials section component~~ → not needed by any real page yet; revisit if content requires it
 4. [Build Projects grid & card components](04-build-projects-grid-and-card-components.md) — still open: the `projects` *collection* (with detail pages) is separate from the `cardGrid` component used for the Projecten listing page's case-structure explainer
-5. [Build Contact form component](05-build-contact-form-component.md) — still open, deliberately not built alongside `ContactDetails.astro` (needs a submission-path decision first, see that task)
+5. [Build Contact form component](05-build-contact-form-component.md) — done; built as a same-origin Worker endpoint using Cloudflare Email Service, blocked on a custom domain for actually sending email (see that task for details)
 6. [Build Knowledge article list & card components](06-build-knowledge-article-list-and-card-components.md) — still open, no real content exists for Kennis yet
 7. ~~Build About intro component~~ → `Intro.astro` (made generic, used by every page)
 

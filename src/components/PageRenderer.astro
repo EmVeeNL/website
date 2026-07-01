@@ -2,6 +2,7 @@
 import { getCollection, type CollectionEntry } from "astro:content";
 import CardGrid from "./CardGrid.astro";
 import ContactDetails from "./ContactDetails.astro";
+import ContactForm from "./ContactForm.astro";
 import Cta from "./Cta.astro";
 import Hero from "./Hero.astro";
 import Intro from "./Intro.astro";
@@ -91,6 +92,10 @@ const noindex = page.data.seo?.noindex ?? false;
 
 			if (config.type === "contactDetails") {
 				return <ContactDetails details={entry.data} />;
+			}
+
+			if (config.type === "contactForm") {
+				return <ContactForm form={entry.data} />;
 			}
 
 			return null;

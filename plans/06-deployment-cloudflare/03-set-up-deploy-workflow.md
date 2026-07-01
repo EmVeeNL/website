@@ -1,7 +1,7 @@
 ---
 task: 03-set-up-deploy-workflow
 plan: 06-deployment-cloudflare
-status: workflows added, needs CLOUDFLARE_API_TOKEN secret
+status: done
 ---
 
 # Task: Set up deploy workflow
@@ -19,7 +19,7 @@ recently).
       (native git integration vs GitHub Actions + `wrangler-action`)
 - [x] Add the chosen CI config, building via `pnpm build` then deploying
       `dist/`
-- [ ] Store the Cloudflare API token as a repo secret, never committed — **CLOUDFLARE_ACCOUNT_ID is set; CLOUDFLARE_API_TOKEN still needs to be added by a human** (see note below)
+- [x] Store the Cloudflare API token as a repo secret, never committed — both `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN` are set
 - [x] Add a preview-deploy step for pull requests if the chosen approach
       supports it, so content/design changes can be reviewed before merge
 
@@ -32,20 +32,16 @@ recommended starting point, but it's configured through the dashboard
 here — GitHub Actions is the CLI-reachable path that could actually be
 fully wired up and verified in this session.
 
-## Required manual step
+## Verified end-to-end
 
-`CLOUDFLARE_API_TOKEN` was deliberately **not** set — creating and handling
-an API token is a credential-issuing action that shouldn't happen without
-you present. Create a scoped token (Cloudflare dashboard → My Profile → API
-Tokens → Create Token → "Edit Cloudflare Workers" template, or a custom
-token scoped to `Workers Scripts:Edit` for this account) and add it with:
-
-```sh
-gh secret set CLOUDFLARE_API_TOKEN --repo EmVeeNL/website
-```
-
-The `deploy.yml` and `preview.yml` workflows will fail until this secret
-exists — they have not been tested end-to-end for that reason.
+`CLOUDFLARE_API_TOKEN` was added 2026-07-01 (created and provided by a
+human, not generated here). Two `preview.yml` runs that had originally
+failed with "CLOUDFLARE_API_TOKEN environment variable" errors (runs
+28541456046, 28540768035 — triggered before the secret existed) were
+re-run via `gh run rerun` and passed, including the PR comment step
+posting a working `*.workers.dev` preview URL. `deploy.yml` (push to
+`main`) hasn't fired yet since nothing has merged to `main` since the
+secret was added, but uses the identical auth path so is expected to work.
 
 ## Acceptance criteria
 
