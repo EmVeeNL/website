@@ -1,7 +1,7 @@
 ---
 task: 01-refactor-to-dynamic-catch-all-page-route
 plan: 02-routing-architecture
-status: planned
+status: done
 ---
 
 # Task: Refactor to a dynamic catch-all page route
@@ -48,16 +48,16 @@ out of sync across files. A single route removes that duplication entirely.
 
 ## Steps
 
-- [ ] Create `src/components/PageRenderer.astro` with the extracted
+- [x] Create `src/components/PageRenderer.astro` with the extracted
       resolution + switch logic (parametrize error messages to reference the
       actual page instead of hardcoding "home")
-- [ ] Create `src/pages/[...slug].astro` using `getStaticPaths()` over the
+- [x] Create `src/pages/[...slug].astro` using `getStaticPaths()` over the
       `pages` collection
-- [ ] Delete `src/pages/index.astro` and `src/pages/en/index.astro`,
+- [x] Delete `src/pages/index.astro` and `src/pages/en/index.astro`,
       replacing their behavior via the new route + one `home.md` entry each
-- [ ] Confirm `astro build` produces the same `dist/index.html` and
+- [x] Confirm `astro build` produces the same `dist/index.html` and
       `dist/en/index.html` output as before the refactor
-- [ ] Confirm 404 behavior is unchanged for unknown slugs
+- [x] Confirm 404 behavior is unchanged for unknown slugs
 
 ## Acceptance criteria
 

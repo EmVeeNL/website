@@ -1,21 +1,21 @@
 ---
-import { getCollection } from "astro:content";
-import CardGrid from "../../components/CardGrid.astro";
-import ContactDetails from "../../components/ContactDetails.astro";
-import Cta from "../../components/Cta.astro";
-import Hero from "../../components/Hero.astro";
-import Intro from "../../components/Intro.astro";
-import StepList from "../../components/StepList.astro";
-import TextBlock from "../../components/TextBlock.astro";
-import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getCollection, type CollectionEntry } from "astro:content";
+import CardGrid from "./CardGrid.astro";
+import ContactDetails from "./ContactDetails.astro";
+import Cta from "./Cta.astro";
+import Hero from "./Hero.astro";
+import Intro from "./Intro.astro";
+import StepList from "./StepList.astro";
+import TextBlock from "./TextBlock.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
 
-const pages = await getCollection("pages");
+type Props = {
+	page: CollectionEntry<"pages">;
+};
+
+const { page } = Astro.props as Props;
+
 const componentEntries = await getCollection("components");
-const page = pages.find((entry) => entry.data.language === "en" && entry.data.slug === "/en/services");
-
-if (!page) {
-	throw new Error("Missing content entry: pages/en/services");
-}
 
 const components = page.data.components
 	.toSorted((a, b) => (a.order ?? 0) - (b.order ?? 0))
@@ -30,7 +30,7 @@ const components = page.data.components
 
 for (const component of components) {
 	if (!component.entry) {
-		throw new Error(`Missing component entry: components/${component.config.ref}`);
+		throw new Error(`Missing component entry: components/${component.config.ref} (page: ${page.id})`);
 	}
 }
 
