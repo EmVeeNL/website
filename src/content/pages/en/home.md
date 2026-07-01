@@ -1,14 +1,15 @@
 ---
 title: Home
 slug: /en
-description: EMVEE designs and builds calm, reliable digital solutions for organizations that value clarity and quality.
+description: EMVEE designs and builds websites, web applications and e-commerce with attention to clarity, quality and personal contact.
 status: Draft
 language: en
 seo:
-  title: EMVEE - Digital solutions that bring clarity
-  description: EMVEE designs and builds websites, web applications, and digital solutions with attention to simplicity, quality, and long-term collaboration.
+  title: EMVEE — Websites, web applications and digital solutions
+  description: EMVEE designs and builds websites, web applications and e-commerce with attention to clarity, quality and personal contact.
   canonical: /en
   noindex: false
+ogImage: ../../../assets/images/homepage/first-conversation-cta.png
 navigation:
   label: Home
   order: 1
@@ -17,34 +18,38 @@ components:
     type: hero
     ref: en/home/hero
     order: 1
-  - id: intro
+  - id: brand-intro
     type: intro
-    ref: en/home/intro
+    ref: en/home/brand-intro
     order: 2
   - id: services
     type: cardGrid
     ref: en/home/services
     order: 3
+  - id: why-emvee
+    type: cardGrid
+    ref: en/home/why-emvee
+    order: 4
+  - id: process
+    type: stepList
+    ref: en/home/process
+    order: 5
+  - id: proof
+    type: cardGrid
+    ref: en/home/proof
+    order: 6
+  - id: quality
+    type: cardGrid
+    ref: en/home/quality
+    order: 7
   - id: personal
     type: textBlock
     ref: en/home/personal
-    order: 4
-  - id: calm-steps
-    type: stepList
-    ref: en/home/calm-steps
-    order: 5
-  - id: long-term
-    type: textBlock
-    ref: en/home/long-term
-    order: 6
-  - id: no-noise
-    type: textBlock
-    ref: en/home/no-noise
-    order: 7
+    order: 8
   - id: cta
     type: cta
     ref: en/home/cta
-    order: 8
+    order: 9
 ---
 
 ## Start writing

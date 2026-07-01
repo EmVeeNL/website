@@ -19,6 +19,7 @@
 	--font-heading: var(--font-heading);
 	--font-content: var(--font-content);
 	--font-code: var(--font-code);
+	--font-editorial: var(--font-editorial);
 	--font-sans: var(--font-content);
 	--font-serif: var(--font-content);
 	--font-mono: var(--font-code);
@@ -32,6 +33,9 @@
 		--font-content:
 			var(--font-geist), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 		--font-code: var(--font-geist-mono), "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+		/* Restrained editorial accent (Lora) — see .prose-content or the Intro
+		   component's `headingStyle: editorial`. Not used for body copy or UI. */
+		--font-editorial: var(--font-lora), Georgia, serif;
 		--color-background: oklch(1 0 89.88);
 		--color-background-subtle: oklch(0.9837 0.0051 247.88);
 		--color-surface-muted: oklch(0.9648 0.0086 247.91);

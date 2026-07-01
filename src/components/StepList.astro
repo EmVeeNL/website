@@ -19,6 +19,7 @@ type StepListContent = {
 	eyebrow?: string;
 	heading?: string;
 	intro?: string;
+	columns?: "2" | "3" | "4";
 	steps?: StepListStep[];
 	action?: StepListAction;
 	image?: ImageMetadata;
@@ -29,6 +30,11 @@ type Props = {
 };
 
 const { steps } = Astro.props as Props;
+const columnsClass = {
+	"2": "sm:grid-cols-2",
+	"3": "sm:grid-cols-2 lg:grid-cols-3",
+	"4": "sm:grid-cols-2 lg:grid-cols-4",
+}[steps.columns ?? "3"];
 ---
 
 <section id={steps.componentId} data-reveal class="px-6 py-10 md:px-12 lg:px-20 lg:py-16">
@@ -59,7 +65,7 @@ const { steps } = Astro.props as Props;
 		)}
 
 		{steps.steps?.length ? (
-			<ol class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+			<ol class:list={["mt-8 grid gap-6", columnsClass]}>
 				{steps.steps.map((step, index) => (
 					<li class="rounded-2xl border border-border-subtle bg-background-subtle p-6">
 						<span class="grid size-9 shrink-0 place-items-center rounded-full bg-accent-subtle text-sm font-bold text-accent" aria-hidden="true">

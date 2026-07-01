@@ -12,6 +12,7 @@ type IntroContent = {
 	componentId?: string;
 	eyebrow?: string;
 	heading: string;
+	headingStyle?: "default" | "editorial";
 	body?: string[];
 	list?: string[];
 	primaryAction?: IntroAction;
@@ -24,6 +25,7 @@ type Props = {
 };
 
 const { intro } = Astro.props as Props;
+const isEditorial = intro.headingStyle === "editorial";
 ---
 
 <section id={intro.componentId} data-reveal class="px-6 py-10 md:px-12 lg:px-20 lg:py-28">
@@ -36,7 +38,13 @@ const { intro } = Astro.props as Props;
 			</p>
 		)}
 
-		<h2 class="max-w-[24ch] text-[clamp(1.75rem,5vw,2.75rem)] font-bold leading-[1.14] text-foreground">
+		<h2
+			class:list={
+				isEditorial
+					? "max-w-[20ch] font-editorial text-[clamp(1.625rem,4.5vw,2.375rem)] font-medium italic leading-[1.3] text-foreground"
+					: "max-w-[24ch] text-[clamp(1.75rem,5vw,2.75rem)] font-bold leading-[1.14] text-foreground"
+			}
+		>
 			{intro.heading}
 		</h2>
 

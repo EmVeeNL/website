@@ -5,11 +5,10 @@ language: nl
 page: home
 componentId: cta
 image: ../../../../assets/images/homepage/first-conversation-cta.png
-heading: Laten we beginnen met begrijpen
+heading: Heb je een digitale vraag?
 text:
-  - Heb je een digitale vraag, een bestaande oplossing die niet meer past of een idee dat nog vorm moet krijgen?
-  - Een eerste gesprek is bedoeld om helder te krijgen wat er werkelijk nodig is.
+  - Laten we eerst kijken wat er werkelijk nodig is.
 primaryAction:
-  label: Neem contact op
+  label: Plan een eerste gesprek
   href: /contact
 ---

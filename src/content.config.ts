@@ -24,30 +24,34 @@ const seoSchema = z.object({
 /* -------------------------------------------------------------------------- */
 const pages = defineCollection({
 	loader: glob({ pattern: "**/*.md", base: "./src/content/pages" }),
-	schema: z.object({
-		title: z.string(),
-		slug: z.string(),
-		description: z.string(),
-		status: statusSchema.default("Draft"),
-		language: languageSchema,
-		seo: seoSchema.optional(),
-		navigation: z
-			.object({
-				label: z.string().optional(),
-				order: z.number().optional(),
-			})
-			.optional(),
-		components: z
-			.array(
-				z.object({
-					id: z.string(),
-					type: z.string(),
-					ref: z.string(),
+	schema: ({ image }) =>
+		z.object({
+			title: z.string(),
+			slug: z.string(),
+			description: z.string(),
+			status: statusSchema.default("Draft"),
+			language: languageSchema,
+			seo: seoSchema.optional(),
+			// Used for og:image / twitter:image. Optional — pages without one
+			// simply don't emit those meta tags rather than fabricating a default.
+			ogImage: image().optional(),
+			navigation: z
+				.object({
+					label: z.string().optional(),
 					order: z.number().optional(),
-				}),
-			)
-			.default([]),
-	}),
+				})
+				.optional(),
+			components: z
+				.array(
+					z.object({
+						id: z.string(),
+						type: z.string(),
+						ref: z.string(),
+						order: z.number().optional(),
+					}),
+				)
+				.default([]),
+		}),
 });
 
 /* -------------------------------------------------------------------------- */
@@ -140,6 +144,10 @@ const components = defineCollection({
 			type: z.literal("intro"),
 			eyebrow: z.string().optional(),
 			heading: z.string(),
+			// "editorial" renders the heading in Lora as a short, restrained
+			// statement (see DESIGN_SYSTEM.md's Lora usage rules) instead of the
+			// default bold Chocopie section heading.
+			headingStyle: z.enum(["default", "editorial"]).default("default"),
 			body: z.array(z.string()).default([]),
 			list: z.array(z.string()).optional(),
 			primaryAction: actionSchema.optional(),
@@ -162,12 +170,17 @@ const components = defineCollection({
 			eyebrow: z.string().optional(),
 			heading: z.string().optional(),
 			intro: z.string().optional(),
+			// "plain" drops the card border/background for lightweight principle
+			// lists that shouldn't read as promotional cards (e.g. "Why EMVEE").
+			variant: z.enum(["cards", "plain"]).default("cards"),
+			columns: z.enum(["2", "3", "4"]).default("3"),
 			items: z
 				.array(
 					z.object({
 						title: z.string(),
 						description: z.string(),
 						list: z.array(z.string()).optional(),
+						link: actionSchema.optional(),
 					}),
 				)
 				.default([]),
@@ -180,6 +193,7 @@ const components = defineCollection({
 			eyebrow: z.string().optional(),
 			heading: z.string().optional(),
 			intro: z.string().optional(),
+			columns: z.enum(["2", "3", "4"]).default("3"),
 			steps: z
 				.array(
 					z.object({
