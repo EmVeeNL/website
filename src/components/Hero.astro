@@ -1,0 +1,160 @@
+---
+import heroDark from "../assets/images/hero-dark.png";
+import heroLight from "../assets/images/hero-light.png";
+import Icon from "./Icon.astro";
+
+// @ts-expect-error - Astro types
+import type {} from "astro";
+
+type HeroAction = {
+	label: string;
+	href: string;
+};
+
+type HeroContent = {
+	componentId?: string;
+	eyebrow?: string;
+	heading?: {
+		before?: string;
+		highlight?: string;
+	};
+	text?: string[];
+	primaryAction?: HeroAction;
+	secondaryAction?: HeroAction;
+	services?: string[];
+	points?: string[];
+};
+
+type Props = {
+	hero: HeroContent;
+};
+
+const { hero } = Astro.props as Props;
+
+function markBrandPunctuation(value = "") {
+	return value.replace(/\bEMVEE\b/g, 'EMVEE<span class="brand-punctuation">.</span>');
+}
+
+const heroTextHtml = hero.text
+	?.map((paragraph) => paragraph.trim())
+	.filter(Boolean)
+	.map(markBrandPunctuation)
+	.join(" ");
+
+const headingBefore = hero.heading?.before ?? "";
+const headingHighlight = hero.heading?.highlight ?? "";
+---
+
+<section
+	id={hero.componentId ?? "hero"}
+	class="relative isolate overflow-hidden px-6 py-10 md:px-12 lg:flex lg:min-h-[calc(100svh-5rem)] lg:items-center lg:px-20 lg:py-28"
+>
+	<img
+		class="pointer-events-none absolute inset-0 -z-20 h-full w-full translate-x-[24%] object-cover object-right opacity-45 dark:hidden sm:translate-x-[18%] lg:translate-x-0 lg:opacity-85"
+		src={heroLight.src}
+		alt=""
+		width={heroLight.width}
+		height={heroLight.height}
+		loading="eager"
+		fetchpriority="high"
+		decoding="async"
+	/>
+
+	<img
+		class="pointer-events-none absolute inset-0 -z-20 hidden h-full w-full translate-x-[24%] object-cover object-right opacity-45 dark:block sm:translate-x-[18%] lg:translate-x-0 lg:opacity-85"
+		src={heroDark.src}
+		alt=""
+		width={heroDark.width}
+		height={heroDark.height}
+		loading="eager"
+		fetchpriority="high"
+		decoding="async"
+	/>
+
+	<div
+		aria-hidden="true"
+		class="absolute inset-0 -z-10 bg-[linear-gradient(90deg,var(--color-background)_0%,color-mix(in_oklch,var(--color-background)_96%,transparent)_58%,color-mix(in_oklch,var(--color-background)_66%,transparent)_100%)] sm:bg-[linear-gradient(90deg,var(--color-background)_0%,color-mix(in_oklch,var(--color-background)_92%,transparent)_52%,color-mix(in_oklch,var(--color-background)_48%,transparent)_100%)] lg:bg-[linear-gradient(90deg,var(--color-background)_0%,color-mix(in_oklch,var(--color-background)_82%,transparent)_42%,color-mix(in_oklch,var(--color-background)_32%,transparent)_100%)] dark:bg-[linear-gradient(90deg,color-mix(in_oklch,var(--color-background)_98%,black)_0%,color-mix(in_oklch,var(--color-background)_92%,transparent)_58%,color-mix(in_oklch,var(--color-background)_58%,transparent)_100%)] dark:sm:bg-[linear-gradient(90deg,color-mix(in_oklch,var(--color-background)_98%,black)_0%,color-mix(in_oklch,var(--color-background)_86%,transparent)_52%,color-mix(in_oklch,var(--color-background)_42%,transparent)_100%)] dark:lg:bg-[linear-gradient(90deg,color-mix(in_oklch,var(--color-background)_96%,black)_0%,color-mix(in_oklch,var(--color-background)_72%,transparent)_42%,color-mix(in_oklch,var(--color-background)_30%,transparent)_100%)]"
+	></div>
+
+	<div class="relative z-10 w-full max-w-[45rem]">
+		{hero.eyebrow && (
+			<p data-hero-stagger class="mb-6 inline-flex items-center gap-3 whitespace-nowrap text-[0.6875rem] font-bold uppercase leading-5 tracking-[0.14em] text-brand-secondary sm:mb-7 sm:text-sm sm:tracking-[0.2em] dark:text-accent">
+				<span aria-hidden="true" class="h-px w-6 shrink-0 bg-linear-to-r from-accent to-transparent sm:w-8"></span>
+				<span>{hero.eyebrow}</span>
+			</p>
+		)}
+
+		<h1 data-hero-stagger class="max-w-[11.5ch] text-balance text-[clamp(2.3rem,11.5vw,4rem)] font-bold leading-[1.06] tracking-normal text-foreground sm:text-[clamp(2.75rem,8vw,4.75rem)] lg:text-[clamp(3.5rem,5.5vw,5.15rem)] lg:leading-[1.08]">
+			<span class="block" set:html={markBrandPunctuation(headingBefore)} />
+			<span
+				class="mt-[0.06em] block bg-[linear-gradient(110deg,#0266E3_10%,#0A9DE3_55%,#05DAFD_90%)] bg-clip-text text-transparent"
+				set:html={markBrandPunctuation(headingHighlight)}
+			/>
+		</h1>
+
+		{heroTextHtml && (
+			<p
+				data-hero-stagger
+				class="mt-7 max-w-[38rem] text-[1.0625rem] leading-[1.75] text-foreground-muted sm:text-lg lg:mt-8 lg:text-[clamp(1.125rem,1.35vw,1.3125rem)]"
+				set:html={heroTextHtml}
+			/>
+		)}
+
+		{(hero.primaryAction || hero.secondaryAction) && (
+			<div data-hero-stagger class="mt-8 flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:gap-5 lg:mt-9">
+				{hero.primaryAction && (
+					<a
+						href={hero.primaryAction.href}
+						class="cta-gradient group inline-flex min-h-12 w-fit items-center justify-center rounded-full px-6 py-3.5 text-sm font-bold uppercase tracking-[0.04em] text-accent-foreground no-underline shadow-lg transition-transform duration-150 hover:-translate-y-px focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--color-focus)] sm:px-7"
+					>
+						<span>{hero.primaryAction.label}</span>
+						<Icon name="arrow-right-linear" size={21} class="ml-2 transition-transform duration-150 group-hover:translate-x-1" />
+					</a>
+				)}
+
+				{hero.secondaryAction && (
+					<a
+						href={hero.secondaryAction.href}
+						class="group inline-flex min-h-11 items-center gap-2 px-2 py-2 text-base font-bold text-foreground-muted no-underline transition-colors duration-150 hover:text-brand-secondary focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--color-focus)]"
+					>
+						<span>{hero.secondaryAction.label}</span>
+						<Icon name="arrow-right-linear" size={20} class="transition-transform duration-150 group-hover:translate-x-1" />
+					</a>
+				)}
+			</div>
+		)}
+
+		{hero.points?.length ? (
+			<ul data-hero-stagger class="mt-9 grid max-w-[44rem] gap-4 text-[0.9375rem] leading-6 text-foreground-muted sm:mt-10 sm:flex sm:flex-wrap sm:items-center sm:gap-x-8 sm:gap-y-4">
+				{hero.points.map((point) => (
+					<li class="flex items-center gap-3">
+						<span aria-hidden="true" class="grid size-5 shrink-0 place-items-center rounded-full bg-brand-secondary/15">
+							<span class="size-1.5 rounded-full bg-accent"></span>
+						</span>
+						<span>{point}</span>
+					</li>
+				))}
+			</ul>
+		) : null}
+	</div>
+</section>
+
+<script>
+	// Staggered entrance on load, not scroll-gated — the hero is always above the fold.
+	// The LCP hero images are untouched; only text/CTA content animates.
+	import { animate, stagger } from "motion";
+
+	const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+	if (!prefersReducedMotion) {
+		const elements = document.querySelectorAll<HTMLElement>("[data-hero-stagger]");
+
+		if (elements.length > 0) {
+			animate(
+				elements,
+				{ opacity: [0, 1], transform: ["translateY(16px)", "translateY(0px)"] },
+				{ duration: 0.5, delay: stagger(0.08), easing: "ease-out" },
+			);
+		}
+	}
+</script>

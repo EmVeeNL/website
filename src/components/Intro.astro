@@ -1,0 +1,82 @@
+---
+import Icon from "./Icon.astro";
+
+type IntroAction = {
+	label: string;
+	href: string;
+};
+
+type IntroContent = {
+	componentId?: string;
+	eyebrow?: string;
+	heading: string;
+	body?: string[];
+	list?: string[];
+	primaryAction?: IntroAction;
+	secondaryAction?: IntroAction;
+};
+
+type Props = {
+	intro: IntroContent;
+};
+
+const { intro } = Astro.props as Props;
+---
+
+<section id={intro.componentId} data-reveal class="px-6 py-10 md:px-12 lg:px-20 lg:py-28">
+	<div class="mx-auto max-w-6xl">
+		{intro.eyebrow && (
+			<p class="mb-6 inline-flex items-center gap-3 whitespace-nowrap text-[0.6875rem] font-bold uppercase leading-5 tracking-[0.14em] text-brand-secondary sm:mb-7 sm:text-sm sm:tracking-[0.2em] dark:text-accent">
+				<span aria-hidden="true" class="h-px w-6 shrink-0 bg-linear-to-r from-accent to-transparent sm:w-8"></span>
+				<span>{intro.eyebrow}</span>
+			</p>
+		)}
+
+		<h2 class="max-w-[24ch] text-[clamp(1.75rem,5vw,2.75rem)] font-bold leading-[1.14] text-foreground">
+			{intro.heading}
+		</h2>
+
+		{intro.body?.length ? (
+			<div class="mt-6 max-w-[60ch] space-y-4 text-[1.0625rem] leading-[1.75] text-foreground-muted sm:text-lg">
+				{intro.body.map((paragraph) => <p>{paragraph}</p>)}
+			</div>
+		) : null}
+
+		{intro.list?.length ? (
+			<ul class="mt-6 max-w-[60ch] space-y-3 text-[0.9375rem] leading-6 text-foreground-muted">
+				{intro.list.map((item) => (
+					<li class="flex items-start gap-3">
+						<span aria-hidden="true" class="mt-2 grid size-5 shrink-0 place-items-center rounded-full bg-brand-secondary/15">
+							<span class="size-1.5 rounded-full bg-accent"></span>
+						</span>
+						<span>{item}</span>
+					</li>
+				))}
+			</ul>
+		) : null}
+
+		{(intro.primaryAction || intro.secondaryAction) && (
+			<div class="mt-8 flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:gap-5">
+				{intro.primaryAction && (
+					<a
+						href={intro.primaryAction.href}
+						class="cta-gradient group inline-flex min-h-12 w-fit items-center justify-center rounded-full px-6 py-3.5 text-sm font-bold uppercase tracking-[0.04em] text-accent-foreground no-underline shadow-lg transition-transform duration-150 hover:-translate-y-px focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--color-focus)] sm:px-7"
+					>
+						<span>{intro.primaryAction.label}</span>
+						<Icon name="arrow-right-linear" size={21} class="ml-2 transition-transform duration-150 group-hover:translate-x-1" />
+					</a>
+				)}
+
+				{intro.secondaryAction && (
+					<a
+						href={intro.secondaryAction.href}
+						class="group inline-flex min-h-11 items-center gap-2 px-2 py-2 text-base font-bold text-foreground-muted no-underline transition-colors duration-150 hover:text-brand-secondary focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--color-focus)]"
+					>
+						<span>{intro.secondaryAction.label}</span>
+						<Icon name="arrow-right-linear" size={20} class="transition-transform duration-150 group-hover:translate-x-1" />
+					</a>
+				)}
+			</div>
+		)}
+	</div>
+</section>

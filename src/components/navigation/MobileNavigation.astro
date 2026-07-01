@@ -1,0 +1,93 @@
+---
+import Icon from "../Icon.astro";
+import type { LanguageSwitcherItem, NavigationItem } from "../../config/navigation";
+
+type Props = {
+	navigationItems: NavigationItem[];
+	languageItems: LanguageSwitcherItem[];
+	contactHref: string;
+};
+
+const { navigationItems, languageItems, contactHref } = Astro.props as Props;
+---
+
+<button
+	type="button"
+	class="inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border border-border-subtle text-foreground lg:hidden"
+	aria-controls="mobile-navigation"
+	aria-expanded="false"
+	aria-label="Menu openen"
+	data-menu-toggle
+>
+	<Icon name="hamburger-menu-linear" size={22} class="menu-toggle__open" />
+	<Icon name="close-circle-linear" size={22} class="menu-toggle__close hidden" />
+</button>
+
+<div id="mobile-navigation" class="overflow-hidden border-t border-border-subtle bg-background px-5 py-5 lg:hidden" hidden data-mobile-menu>
+	<nav aria-label="Mobiele hoofdnavigatie">
+		<ul class="grid gap-1">
+			{
+				navigationItems.map((item) => (
+					<li>
+						<a
+							class={`flex min-h-11 items-center rounded-lg px-3 text-base transition-colors duration-150 ${item.isActive ? "bg-accent-subtle text-accent-hover dark:text-accent" : "text-foreground hover:bg-surface-muted"}`}
+							href={item.href}
+							aria-current={item.isActive ? "page" : undefined}
+						>
+							{item.label}
+						</a>
+					</li>
+				))
+			}
+		</ul>
+	</nav>
+
+	<div class="mt-5 flex flex-wrap items-center gap-3 border-t border-border-subtle pt-5">
+		<nav aria-label="Mobiele taalkeuze" class="flex min-h-11 items-center rounded-full border border-border-subtle px-1 text-sm">
+			{
+				languageItems.map((item, index) => {
+					const itemClass = [
+						"inline-flex min-h-9 min-w-10 items-center justify-center rounded-full px-3 transition-colors duration-150",
+						item.isActive ? "bg-accent-subtle text-accent-hover dark:text-accent" : "text-foreground-subtle",
+						!item.available ? "cursor-not-allowed opacity-45" : "",
+					].join(" ");
+
+					return (
+						<>
+							{item.available ? (
+								<a class={itemClass} href={item.href} lang={item.lang} hreflang={item.lang} data-lang-switch aria-current={item.isActive ? "true" : undefined}>
+									{item.label}
+								</a>
+							) : (
+								<span class={itemClass} lang={item.lang} aria-disabled="true">
+									{item.label}
+								</span>
+							)}
+							{index === 0 && <span class="text-border-strong" aria-hidden="true">/</span>}
+						</>
+					);
+				})
+			}
+		</nav>
+
+		<button
+			type="button"
+			class="inline-flex min-h-11 items-center gap-2 rounded-full border border-border-subtle px-4 text-sm text-foreground transition-colors duration-150 hover:bg-surface-muted"
+			aria-label="Wissel naar dark mode"
+			aria-pressed="false"
+			data-theme-toggle
+		>
+			<span class="relative inline-grid place-items-center">
+				<slot name="theme-icons" />
+			</span>
+			<span>Thema</span>
+		</button>
+
+		<a
+			href={contactHref}
+			class="cta-gradient inline-flex min-h-11 flex-1 items-center justify-center rounded-full px-5 py-2 text-sm font-bold text-accent-foreground no-underline sm:flex-none"
+		>
+			Plan een gesprek
+		</a>
+	</div>
+</div>

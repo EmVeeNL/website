@@ -1,0 +1,60 @@
+---
+import Icon from "./Icon.astro";
+
+type CtaAction = {
+	label: string;
+	href: string;
+};
+
+type CtaContent = {
+	componentId?: string;
+	heading: string;
+	text?: string[];
+	primaryAction?: CtaAction;
+	secondaryAction?: CtaAction;
+};
+
+type Props = {
+	cta: CtaContent;
+};
+
+const { cta } = Astro.props as Props;
+---
+
+<section id={cta.componentId} data-reveal class="px-6 py-10 md:px-12 lg:px-20 lg:py-24">
+	<div class="mx-auto max-w-6xl rounded-3xl bg-background-subtle px-6 py-12 sm:px-12 sm:py-16 lg:px-16">
+		<h2 class="max-w-[24ch] text-[clamp(1.75rem,5vw,2.75rem)] font-bold leading-[1.14] text-foreground">
+			{cta.heading}
+		</h2>
+
+		{cta.text?.length ? (
+			<div class="mt-5 max-w-[60ch] space-y-4 text-[1.0625rem] leading-[1.75] text-foreground-muted sm:text-lg">
+				{cta.text.map((paragraph) => <p>{paragraph}</p>)}
+			</div>
+		) : null}
+
+		{(cta.primaryAction || cta.secondaryAction) && (
+			<div class="mt-8 flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:gap-5">
+				{cta.primaryAction && (
+					<a
+						href={cta.primaryAction.href}
+						class="cta-gradient group inline-flex min-h-12 w-fit items-center justify-center rounded-full px-6 py-3.5 text-sm font-bold uppercase tracking-[0.04em] text-accent-foreground no-underline shadow-lg transition-transform duration-150 hover:-translate-y-px focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--color-focus)] sm:px-7"
+					>
+						<span>{cta.primaryAction.label}</span>
+						<Icon name="arrow-right-linear" size={21} class="ml-2 transition-transform duration-150 group-hover:translate-x-1" />
+					</a>
+				)}
+
+				{cta.secondaryAction && (
+					<a
+						href={cta.secondaryAction.href}
+						class="group inline-flex min-h-11 items-center gap-2 px-2 py-2 text-base font-bold text-foreground-muted no-underline transition-colors duration-150 hover:text-brand-secondary focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--color-focus)]"
+					>
+						<span>{cta.secondaryAction.label}</span>
+						<Icon name="arrow-right-linear" size={20} class="transition-transform duration-150 group-hover:translate-x-1" />
+					</a>
+				)}
+			</div>
+		)}
+	</div>
+</section>

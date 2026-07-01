@@ -1,0 +1,1278 @@
+{
+  "$schema": "https://frontmatter.codes/frontmatter.schema.json",
+  "frontMatter.framework.id": "astro",
+  "frontMatter.preview.host": "http://localhost:4321",
+  "frontMatter.content.publicFolder": {
+    "path": "src/assets",
+    "relative": true
+  },
+  "frontMatter.taxonomy.contentTypeField": "type",
+  "frontMatter.content.pageFolders": [
+    {
+      "title": "Pages (English)",
+      "path": "[[workspace]]/src/content/pages/en",
+      "contentTypes": [
+        "page"
+      ],
+      "defaultLocale": "en",
+      "previewPath": ""
+    },
+    {
+      "title": "Pages (Dutch)",
+      "path": "[[workspace]]/src/content/pages/nl",
+      "contentTypes": [
+        "page"
+      ],
+      "defaultLocale": "nl",
+      "previewPath": ""
+    },
+    {
+      "title": "Components (English)",
+      "path": "[[workspace]]/src/content/components/en",
+      "contentTypes": [
+        "hero",
+        "intro",
+        "textBlock",
+        "cardGrid",
+        "stepList",
+        "cta",
+        "contactDetails",
+        "contactForm",
+        "projectsListing",
+        "knowledgeListing"
+      ],
+      "defaultLocale": "en"
+    },
+    {
+      "title": "Components (Dutch)",
+      "path": "[[workspace]]/src/content/components/nl",
+      "contentTypes": [
+        "hero",
+        "intro",
+        "textBlock",
+        "cardGrid",
+        "stepList",
+        "cta",
+        "contactDetails",
+        "contactForm",
+        "projectsListing",
+        "knowledgeListing"
+      ],
+      "defaultLocale": "nl"
+    },
+    {
+      "title": "Projects (English)",
+      "path": "[[workspace]]/src/content/projects/en",
+      "contentTypes": [
+        "project"
+      ],
+      "defaultLocale": "en"
+    },
+    {
+      "title": "Projects (Dutch)",
+      "path": "[[workspace]]/src/content/projects/nl",
+      "contentTypes": [
+        "project"
+      ],
+      "defaultLocale": "nl"
+    },
+    {
+      "title": "Knowledge (English)",
+      "path": "[[workspace]]/src/content/knowledge/en",
+      "contentTypes": [
+        "article"
+      ],
+      "defaultLocale": "en"
+    },
+    {
+      "title": "Knowledge (Dutch)",
+      "path": "[[workspace]]/src/content/knowledge/nl",
+      "contentTypes": [
+        "article"
+      ],
+      "defaultLocale": "nl"
+    }
+  ],
+  "frontMatter.taxonomy.contentTypes": [
+    {
+      "name": "page",
+      "pageBundle": false,
+      "fields": [
+        {
+          "title": "Title",
+          "name": "title",
+          "type": "string",
+          "required": true
+        },
+        {
+          "title": "Slug",
+          "name": "slug",
+          "type": "string",
+          "required": true
+        },
+        {
+          "title": "Description",
+          "name": "description",
+          "type": "string",
+          "single": false,
+          "required": true
+        },
+        {
+          "title": "Status",
+          "name": "status",
+          "type": "choice",
+          "choices": [
+            "Draft",
+            "Published"
+          ],
+          "default": "Draft"
+        },
+        {
+          "title": "Language",
+          "name": "language",
+          "type": "choice",
+          "choices": [
+            "nl",
+            "en"
+          ],
+          "required": true
+        },
+        {
+          "title": "SEO",
+          "name": "seo",
+          "type": "fields",
+          "fields": [
+            {
+              "title": "SEO Title",
+              "name": "title",
+              "type": "string"
+            },
+            {
+              "title": "SEO Description",
+              "name": "description",
+              "type": "string",
+              "single": false
+            },
+            {
+              "title": "Canonical URL",
+              "name": "canonical",
+              "type": "string"
+            },
+            {
+              "title": "Noindex",
+              "name": "noindex",
+              "type": "boolean",
+              "default": false
+            }
+          ]
+        },
+        {
+          "title": "Navigation",
+          "name": "navigation",
+          "type": "fields",
+          "fields": [
+            {
+              "title": "Label",
+              "name": "label",
+              "type": "string"
+            },
+            {
+              "title": "Order",
+              "name": "order",
+              "type": "number"
+            }
+          ]
+        },
+        {
+          "title": "Components",
+          "name": "components",
+          "type": "block",
+          "fieldGroup": [
+            "componentRef"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "hero",
+      "pageBundle": false,
+      "fields": [
+        {
+          "title": "Title",
+          "name": "title",
+          "type": "string",
+          "required": true
+        },
+        {
+          "title": "Type",
+          "name": "type",
+          "type": "string",
+          "default": "hero",
+          "required": true
+        },
+        {
+          "title": "Language",
+          "name": "language",
+          "type": "choice",
+          "choices": [
+            "nl",
+            "en"
+          ],
+          "required": true
+        },
+        {
+          "title": "Page",
+          "name": "page",
+          "type": "string",
+          "required": true
+        },
+        {
+          "title": "Component ID",
+          "name": "componentId",
+          "type": "string",
+          "required": true
+        },
+        {
+          "title": "Eyebrow",
+          "name": "eyebrow",
+          "type": "string"
+        },
+        {
+          "title": "Heading",
+          "name": "heading",
+          "type": "fields",
+          "fields": [
+            {
+              "title": "Before",
+              "name": "before",
+              "type": "string"
+            },
+            {
+              "title": "Highlight",
+              "name": "highlight",
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "title": "Text",
+          "name": "text",
+          "type": "list"
+        },
+        {
+          "title": "Primary action",
+          "name": "primaryAction",
+          "type": "fields",
+          "fields": [
+            {
+              "title": "Label",
+              "name": "label",
+              "type": "string"
+            },
+            {
+              "title": "Href",
+              "name": "href",
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "title": "Secondary action",
+          "name": "secondaryAction",
+          "type": "fields",
+          "fields": [
+            {
+              "title": "Label",
+              "name": "label",
+              "type": "string"
+            },
+            {
+              "title": "Href",
+              "name": "href",
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "title": "Services",
+          "name": "services",
+          "type": "list"
+        },
+        {
+          "title": "Points",
+          "name": "points",
+          "type": "list"
+        }
+      ]
+    },
+    {
+      "name": "intro",
+      "pageBundle": false,
+      "fields": [
+        {
+          "title": "Title",
+          "name": "title",
+          "type": "string",
+          "required": true
+        },
+        {
+          "title": "Type",
+          "name": "type",
+          "type": "string",
+          "default": "intro",
+          "required": true
+        },
+        {
+          "title": "Language",
+          "name": "language",
+          "type": "choice",
+          "choices": [
+            "nl",
+            "en"
+          ],
+          "required": true
+        },
+        {
+          "title": "Page",
+          "name": "page",
+          "type": "string",
+          "required": true
+        },
+        {
+          "title": "Component ID",
+          "name": "componentId",
+          "type": "string",
+          "required": true
+        },
+        {
+          "title": "Eyebrow",
+          "name": "eyebrow",
+          "type": "string"
+        },
+        {
+          "title": "Heading",
+          "name": "heading",
+          "type": "string",
+          "required": true
+        },
+        {
+          "title": "Body",
+          "name": "body",
+          "type": "list"
+        },
+        {
+          "title": "List",
+          "name": "list",
+          "type": "list"
+        },
+        {
+          "title": "Primary action",
+          "name": "primaryAction",
+          "type": "fields",
+          "fields": [
+            {
+              "title": "Label",
+              "name": "label",
+              "type": "string"
+            },
+            {
+              "title": "Href",
+              "name": "href",
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "title": "Secondary action",
+          "name": "secondaryAction",
+          "type": "fields",
+          "fields": [
+            {
+              "title": "Label",
+              "name": "label",
+              "type": "string"
+            },
+            {
+              "title": "Href",
+              "name": "href",
+              "type": "string"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "textBlock",
+      "pageBundle": false,
+      "fields": [
+        {
+          "title": "Title",
+          "name": "title",
+          "type": "string",
+          "required": true
+        },
+        {
+          "title": "Type",
+          "name": "type",
+          "type": "string",
+          "default": "textBlock",
+          "required": true
+        },
+        {
+          "title": "Language",
+          "name": "language",
+          "type": "choice",
+          "choices": [
+            "nl",
+            "en"
+          ],
+          "required": true
+        },
+        {
+          "title": "Page",
+          "name": "page",
+          "type": "string",
+          "required": true
+        },
+        {
+          "title": "Component ID",
+          "name": "componentId",
+          "type": "string",
+          "required": true
+        },
+        {
+          "title": "Heading",
+          "name": "heading",
+          "type": "string"
+        },
+        {
+          "title": "Body",
+          "name": "body",
+          "type": "list"
+        },
+        {
+          "title": "List",
+          "name": "list",
+          "type": "list"
+        },
+        {
+          "title": "List style",
+          "name": "listStyle",
+          "type": "choice",
+          "choices": [
+            "bullet",
+            "number"
+          ],
+          "default": "bullet"
+        },
+        {
+          "title": "After list",
+          "name": "afterList",
+          "type": "list"
+        }
+      ]
+    },
+    {
+      "name": "cardGrid",
+      "pageBundle": false,
+      "fields": [
+        {
+          "title": "Title",
+          "name": "title",
+          "type": "string",
+          "required": true
+        },
+        {
+          "title": "Type",
+          "name": "type",
+          "type": "string",
+          "default": "cardGrid",
+          "required": true
+        },
+        {
+          "title": "Language",
+          "name": "language",
+          "type": "choice",
+          "choices": [
+            "nl",
+            "en"
+          ],
+          "required": true
+        },
+        {
+          "title": "Page",
+          "name": "page",
+          "type": "string",
+          "required": true
+        },
+        {
+          "title": "Component ID",
+          "name": "componentId",
+          "type": "string",
+          "required": true
+        },
+        {
+          "title": "Eyebrow",
+          "name": "eyebrow",
+          "type": "string"
+        },
+        {
+          "title": "Heading",
+          "name": "heading",
+          "type": "string"
+        },
+        {
+          "title": "Intro",
+          "name": "intro",
+          "type": "string"
+        },
+        {
+          "title": "Items",
+          "name": "items",
+          "type": "block",
+          "fieldGroup": [
+            "cardGridItem"
+          ]
+        },
+        {
+          "title": "Action",
+          "name": "action",
+          "type": "fields",
+          "fields": [
+            {
+              "title": "Label",
+              "name": "label",
+              "type": "string"
+            },
+            {
+              "title": "Href",
+              "name": "href",
+              "type": "string"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "stepList",
+      "pageBundle": false,
+      "fields": [
+        {
+          "title": "Title",
+          "name": "title",
+          "type": "string",
+          "required": true
+        },
+        {
+          "title": "Type",
+          "name": "type",
+          "type": "string",
+          "default": "stepList",
+          "required": true
+        },
+        {
+          "title": "Language",
+          "name": "language",
+          "type": "choice",
+          "choices": [
+            "nl",
+            "en"
+          ],
+          "required": true
+        },
+        {
+          "title": "Page",
+          "name": "page",
+          "type": "string",
+          "required": true
+        },
+        {
+          "title": "Component ID",
+          "name": "componentId",
+          "type": "string",
+          "required": true
+        },
+        {
+          "title": "Eyebrow",
+          "name": "eyebrow",
+          "type": "string"
+        },
+        {
+          "title": "Heading",
+          "name": "heading",
+          "type": "string"
+        },
+        {
+          "title": "Intro",
+          "name": "intro",
+          "type": "string"
+        },
+        {
+          "title": "Steps",
+          "name": "steps",
+          "type": "block",
+          "fieldGroup": [
+            "stepListStep"
+          ]
+        },
+        {
+          "title": "Action",
+          "name": "action",
+          "type": "fields",
+          "fields": [
+            {
+              "title": "Label",
+              "name": "label",
+              "type": "string"
+            },
+            {
+              "title": "Href",
+              "name": "href",
+              "type": "string"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "cta",
+      "pageBundle": false,
+      "fields": [
+        {
+          "title": "Title",
+          "name": "title",
+          "type": "string",
+          "required": true
+        },
+        {
+          "title": "Type",
+          "name": "type",
+          "type": "string",
+          "default": "cta",
+          "required": true
+        },
+        {
+          "title": "Language",
+          "name": "language",
+          "type": "choice",
+          "choices": [
+            "nl",
+            "en"
+          ],
+          "required": true
+        },
+        {
+          "title": "Page",
+          "name": "page",
+          "type": "string",
+          "required": true
+        },
+        {
+          "title": "Component ID",
+          "name": "componentId",
+          "type": "string",
+          "required": true
+        },
+        {
+          "title": "Heading",
+          "name": "heading",
+          "type": "string",
+          "required": true
+        },
+        {
+          "title": "Text",
+          "name": "text",
+          "type": "list"
+        },
+        {
+          "title": "Primary action",
+          "name": "primaryAction",
+          "type": "fields",
+          "fields": [
+            {
+              "title": "Label",
+              "name": "label",
+              "type": "string"
+            },
+            {
+              "title": "Href",
+              "name": "href",
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "title": "Secondary action",
+          "name": "secondaryAction",
+          "type": "fields",
+          "fields": [
+            {
+              "title": "Label",
+              "name": "label",
+              "type": "string"
+            },
+            {
+              "title": "Href",
+              "name": "href",
+              "type": "string"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "contactDetails",
+      "pageBundle": false,
+      "fields": [
+        {
+          "title": "Title",
+          "name": "title",
+          "type": "string",
+          "required": true
+        },
+        {
+          "title": "Type",
+          "name": "type",
+          "type": "string",
+          "default": "contactDetails",
+          "required": true
+        },
+        {
+          "title": "Language",
+          "name": "language",
+          "type": "choice",
+          "choices": [
+            "nl",
+            "en"
+          ],
+          "required": true
+        },
+        {
+          "title": "Page",
+          "name": "page",
+          "type": "string",
+          "required": true
+        },
+        {
+          "title": "Component ID",
+          "name": "componentId",
+          "type": "string",
+          "required": true
+        },
+        {
+          "title": "Email",
+          "name": "email",
+          "type": "string",
+          "required": true
+        },
+        {
+          "title": "Phone",
+          "name": "phone",
+          "type": "string",
+          "required": true
+        },
+        {
+          "title": "Location",
+          "name": "location",
+          "type": "string",
+          "required": true
+        },
+        {
+          "title": "Note",
+          "name": "note",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "contactForm",
+      "pageBundle": false,
+      "fields": [
+        {
+          "title": "Title",
+          "name": "title",
+          "type": "string",
+          "required": true
+        },
+        {
+          "title": "Type",
+          "name": "type",
+          "type": "string",
+          "default": "contactForm",
+          "required": true
+        },
+        {
+          "title": "Language",
+          "name": "language",
+          "type": "choice",
+          "choices": [
+            "nl",
+            "en"
+          ],
+          "required": true
+        },
+        {
+          "title": "Page",
+          "name": "page",
+          "type": "string",
+          "required": true
+        },
+        {
+          "title": "Component ID",
+          "name": "componentId",
+          "type": "string",
+          "required": true
+        },
+        {
+          "title": "Heading",
+          "name": "heading",
+          "type": "string"
+        },
+        {
+          "title": "Fields",
+          "name": "fields",
+          "type": "fields",
+          "fields": [
+            {
+              "title": "Name label",
+              "name": "name",
+              "type": "string"
+            },
+            {
+              "title": "Organisation label",
+              "name": "organisation",
+              "type": "string"
+            },
+            {
+              "title": "Email label",
+              "name": "email",
+              "type": "string"
+            },
+            {
+              "title": "Phone label",
+              "name": "phone",
+              "type": "string"
+            },
+            {
+              "title": "Subject label",
+              "name": "subject",
+              "type": "string"
+            },
+            {
+              "title": "Message label",
+              "name": "message",
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "title": "Optional label",
+          "name": "optionalLabel",
+          "type": "string"
+        },
+        {
+          "title": "Consent",
+          "name": "consent",
+          "type": "fields",
+          "fields": [
+            {
+              "title": "Before",
+              "name": "before",
+              "type": "string"
+            },
+            {
+              "title": "Link",
+              "name": "link",
+              "type": "fields",
+              "fields": [
+                {
+                  "title": "Label",
+                  "name": "label",
+                  "type": "string"
+                },
+                {
+                  "title": "Href",
+                  "name": "href",
+                  "type": "string"
+                }
+              ]
+            },
+            {
+              "title": "After",
+              "name": "after",
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "title": "Submit label",
+          "name": "submitLabel",
+          "type": "string"
+        },
+        {
+          "title": "Success message",
+          "name": "successMessage",
+          "type": "string"
+        },
+        {
+          "title": "Error message",
+          "name": "errorMessage",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "project",
+      "pageBundle": false,
+      "fields": [
+        {
+          "title": "Title",
+          "name": "title",
+          "type": "string",
+          "required": true
+        },
+        {
+          "title": "Slug",
+          "name": "slug",
+          "type": "string",
+          "required": true
+        },
+        {
+          "title": "Language",
+          "name": "language",
+          "type": "choice",
+          "choices": [
+            "nl",
+            "en"
+          ],
+          "required": true
+        },
+        {
+          "title": "Summary",
+          "name": "summary",
+          "type": "string",
+          "single": false,
+          "required": true
+        },
+        {
+          "title": "Client",
+          "name": "client",
+          "type": "string"
+        },
+        {
+          "title": "Year",
+          "name": "year",
+          "type": "number"
+        },
+        {
+          "title": "Cover",
+          "name": "cover",
+          "type": "image"
+        },
+        {
+          "title": "Tags",
+          "name": "tags",
+          "type": "list"
+        },
+        {
+          "title": "Status",
+          "name": "status",
+          "type": "choice",
+          "choices": [
+            "Draft",
+            "Published"
+          ],
+          "default": "Draft"
+        },
+        {
+          "title": "SEO",
+          "name": "seo",
+          "type": "fields",
+          "fields": [
+            {
+              "title": "SEO Title",
+              "name": "title",
+              "type": "string"
+            },
+            {
+              "title": "SEO Description",
+              "name": "description",
+              "type": "string",
+              "single": false
+            },
+            {
+              "title": "Canonical URL",
+              "name": "canonical",
+              "type": "string"
+            },
+            {
+              "title": "Noindex",
+              "name": "noindex",
+              "type": "boolean",
+              "default": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "article",
+      "pageBundle": false,
+      "fields": [
+        {
+          "title": "Title",
+          "name": "title",
+          "type": "string",
+          "required": true
+        },
+        {
+          "title": "Slug",
+          "name": "slug",
+          "type": "string",
+          "required": true
+        },
+        {
+          "title": "Language",
+          "name": "language",
+          "type": "choice",
+          "choices": [
+            "nl",
+            "en"
+          ],
+          "required": true
+        },
+        {
+          "title": "Excerpt",
+          "name": "excerpt",
+          "type": "string",
+          "single": false,
+          "required": true
+        },
+        {
+          "title": "Published at",
+          "name": "publishedAt",
+          "type": "datetime",
+          "required": true
+        },
+        {
+          "title": "Cover",
+          "name": "cover",
+          "type": "image"
+        },
+        {
+          "title": "Tags",
+          "name": "tags",
+          "type": "list"
+        },
+        {
+          "title": "Status",
+          "name": "status",
+          "type": "choice",
+          "choices": [
+            "Draft",
+            "Published"
+          ],
+          "default": "Draft"
+        },
+        {
+          "title": "SEO",
+          "name": "seo",
+          "type": "fields",
+          "fields": [
+            {
+              "title": "SEO Title",
+              "name": "title",
+              "type": "string"
+            },
+            {
+              "title": "SEO Description",
+              "name": "description",
+              "type": "string",
+              "single": false
+            },
+            {
+              "title": "Canonical URL",
+              "name": "canonical",
+              "type": "string"
+            },
+            {
+              "title": "Noindex",
+              "name": "noindex",
+              "type": "boolean",
+              "default": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "projectsListing",
+      "pageBundle": false,
+      "fields": [
+        {
+          "title": "Title",
+          "name": "title",
+          "type": "string",
+          "required": true
+        },
+        {
+          "title": "Type",
+          "name": "type",
+          "type": "string",
+          "default": "projectsListing",
+          "required": true
+        },
+        {
+          "title": "Language",
+          "name": "language",
+          "type": "choice",
+          "choices": [
+            "nl",
+            "en"
+          ],
+          "required": true
+        },
+        {
+          "title": "Page",
+          "name": "page",
+          "type": "string",
+          "required": true
+        },
+        {
+          "title": "Component ID",
+          "name": "componentId",
+          "type": "string",
+          "required": true
+        },
+        {
+          "title": "Heading",
+          "name": "heading",
+          "type": "string"
+        },
+        {
+          "title": "Intro",
+          "name": "intro",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "knowledgeListing",
+      "pageBundle": false,
+      "fields": [
+        {
+          "title": "Title",
+          "name": "title",
+          "type": "string",
+          "required": true
+        },
+        {
+          "title": "Type",
+          "name": "type",
+          "type": "string",
+          "default": "knowledgeListing",
+          "required": true
+        },
+        {
+          "title": "Language",
+          "name": "language",
+          "type": "choice",
+          "choices": [
+            "nl",
+            "en"
+          ],
+          "required": true
+        },
+        {
+          "title": "Page",
+          "name": "page",
+          "type": "string",
+          "required": true
+        },
+        {
+          "title": "Component ID",
+          "name": "componentId",
+          "type": "string",
+          "required": true
+        },
+        {
+          "title": "Heading",
+          "name": "heading",
+          "type": "string"
+        },
+        {
+          "title": "Intro",
+          "name": "intro",
+          "type": "string"
+        }
+      ]
+    }
+  ],
+  "frontMatter.taxonomy.fieldGroups": [
+    {
+      "id": "componentRef",
+      "fields": [
+        {
+          "title": "id",
+          "name": "id",
+          "type": "string"
+        },
+        {
+          "title": "type",
+          "name": "type",
+          "type": "string"
+        },
+        {
+          "title": "ref",
+          "name": "ref",
+          "type": "string"
+        },
+        {
+          "title": "order",
+          "name": "order",
+          "type": "number"
+        }
+      ]
+    },
+    {
+      "id": "cardGridItem",
+      "fields": [
+        {
+          "title": "Title",
+          "name": "title",
+          "type": "string"
+        },
+        {
+          "title": "Description",
+          "name": "description",
+          "type": "string"
+        },
+        {
+          "title": "List",
+          "name": "list",
+          "type": "list"
+        }
+      ]
+    },
+    {
+      "id": "stepListStep",
+      "fields": [
+        {
+          "title": "Title",
+          "name": "title",
+          "type": "string"
+        },
+        {
+          "title": "Description",
+          "name": "description",
+          "type": "string"
+        },
+        {
+          "title": "List",
+          "name": "list",
+          "type": "list"
+        }
+      ]
+    }
+  ]
+}

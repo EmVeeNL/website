@@ -2,6 +2,11 @@
 dist/
 # generated types
 .astro/
+# wrangler local state
+.wrangler/
+
+# Claude Code local session state
+.claude/
 
 # dependencies
 node_modules/
@@ -22,3 +27,6 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# Frontmatter CMS local editor state
+.frontmatter/database/

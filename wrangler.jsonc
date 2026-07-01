@@ -1,0 +1,15 @@
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "emvee-website",
+	"main": "worker/index.ts",
+	"compatibility_date": "2026-07-01",
+	"compatibility_flags": ["nodejs_compat"],
+	"assets": {
+		"directory": "./dist",
+		"not_found_handling": "404-page",
+		"run_worker_first": ["/api/*"]
+	},
+	"send_email": [
+		{ "name": "EMAIL" }
+	]
+}

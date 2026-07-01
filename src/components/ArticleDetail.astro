@@ -1,0 +1,85 @@
+---
+import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+import Icon from "./Icon.astro";
+
+type Props = {
+	article: CollectionEntry<"knowledge">;
+	backHref: string;
+	backLabel: string;
+};
+
+const { article, backHref, backLabel } = Astro.props as Props;
+const { title, excerpt, publishedAt, cover, tags, language } = article.data;
+
+const formattedDate = new Intl.DateTimeFormat(language === "en" ? "en-GB" : "nl-NL", {
+	year: "numeric",
+	month: "long",
+	day: "numeric",
+}).format(publishedAt);
+---
+
+<article class="px-6 py-10 md:px-12 lg:px-20 lg:py-16">
+	<div class="mx-auto max-w-3xl">
+		<a
+			href={backHref}
+			class="group inline-flex min-h-11 items-center gap-2 px-2 py-2 text-base font-bold text-foreground-muted no-underline transition-colors duration-150 hover:text-brand-secondary focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--color-focus)]"
+		>
+			<Icon name="arrow-right-linear" size={20} class="rotate-180 transition-transform duration-150 group-hover:-translate-x-1" />
+			<span>{backLabel}</span>
+		</a>
+
+		<time datetime={publishedAt.toISOString()} class="mt-6 block text-[0.8125rem] font-bold uppercase tracking-[0.08em] text-foreground-subtle">
+			{formattedDate}
+		</time>
+
+		<h1 class="mt-2 max-w-[20ch] text-[clamp(1.75rem,5vw,2.75rem)] font-bold leading-[1.14] text-foreground">
+			{title}
+		</h1>
+
+		<p class="mt-5 max-w-[60ch] text-[1.0625rem] leading-[1.75] text-foreground-muted sm:text-lg">{excerpt}</p>
+
+		{tags?.length ? (
+			<ul class="mt-5 flex flex-wrap gap-2">
+				{tags.map((tag) => (
+					<li class="rounded-full bg-accent-subtle px-3 py-1 text-[0.75rem] font-bold uppercase tracking-[0.04em] text-accent-hover dark:text-accent">
+						{tag}
+					</li>
+				))}
+			</ul>
+		) : null}
+
+		{cover && (
+			<Image
+				src={cover}
+				alt=""
+				width={1200}
+				height={675}
+				class="mt-8 aspect-video w-full rounded-2xl object-cover"
+			/>
+		)}
+
+		<div class="prose-content mt-8 max-w-[60ch] space-y-4 text-[1.0625rem] leading-[1.75] text-foreground-muted sm:text-lg">
+			<slot />
+		</div>
+	</div>
+</article>
+
+<style>
+	.prose-content :global(h2) {
+		margin-top: 2.5rem;
+		font-size: clamp(1.25rem, 3vw, 1.5rem);
+		font-weight: 700;
+		line-height: 1.22;
+		color: var(--color-foreground);
+	}
+
+	.prose-content :global(p) {
+		margin: 0;
+	}
+
+	.prose-content :global(ul),
+	.prose-content :global(ol) {
+		padding-inline-start: 1.5rem;
+	}
+</style>

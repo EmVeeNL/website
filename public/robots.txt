@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://emvee-website.frosty-hill-6079.workers.dev/sitemap-index.xml

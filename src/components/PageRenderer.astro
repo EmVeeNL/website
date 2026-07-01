@@ -1,0 +1,134 @@
+---
+import { getCollection, type CollectionEntry } from "astro:content";
+import ArticleList from "./ArticleList.astro";
+import CardGrid from "./CardGrid.astro";
+import ContactDetails from "./ContactDetails.astro";
+import ContactForm from "./ContactForm.astro";
+import Cta from "./Cta.astro";
+import Hero from "./Hero.astro";
+import Intro from "./Intro.astro";
+import ProjectsGrid from "./ProjectsGrid.astro";
+import StepList from "./StepList.astro";
+import TextBlock from "./TextBlock.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { defaultLanguage, getLanguageSwitcherItems, getRoutePath } from "../config/navigation";
+
+type Props = {
+	page: CollectionEntry<"pages">;
+};
+
+const { page } = Astro.props as Props;
+
+const componentEntries = await getCollection("components");
+const projectEntries = await getCollection("projects", (entry) => entry.data.language === page.data.language);
+const knowledgeEntries = await getCollection("knowledge", (entry) => entry.data.language === page.data.language);
+const projectsBasePath = getRoutePath("projects", page.data.language);
+const knowledgeBasePath = getRoutePath("knowledge", page.data.language);
+
+const languageItems = getLanguageSwitcherItems(Astro.url.pathname, page.data.language);
+const alternates = languageItems
+	.filter((item) => item.available)
+	.map((item) => ({ lang: item.lang, href: new URL(item.href, Astro.site).toString() }));
+const defaultAlternate = languageItems.find((item) => item.lang === defaultLanguage);
+
+if (defaultAlternate) {
+	alternates.push({ lang: "x-default", href: new URL(defaultAlternate.href, Astro.site).toString() });
+}
+
+const canonicalPath = page.data.seo?.canonical ?? page.data.slug;
+const canonical = new URL(canonicalPath, Astro.site).toString();
+
+const components = page.data.components
+	.toSorted((a, b) => (a.order ?? 0) - (b.order ?? 0))
+	.map((component) => ({
+		config: component,
+		entry: componentEntries.find((entry) => {
+			const dataRef = `${entry.data.language}/${entry.data.page}/${entry.data.componentId}`;
+
+			return entry.id === component.ref || entry.id === `${component.ref}.md` || dataRef === component.ref;
+		}),
+	}));
+
+for (const component of components) {
+	if (!component.entry) {
+		throw new Error(`Missing component entry: components/${component.config.ref} (page: ${page.id})`);
+	}
+}
+
+const title = page.data.seo?.title ?? page.data.title;
+const description = page.data.seo?.description ?? page.data.description;
+const noindex = page.data.seo?.noindex ?? false;
+---
+
+<BaseLayout
+	title={title}
+	description={description}
+	lang={page.data.language}
+	canonical={canonical}
+	noindex={noindex}
+	alternates={alternates}
+>
+	{
+		components.map(({ config, entry }) => {
+			if (!entry) return null;
+
+			if (config.type === "hero") {
+				return <Hero hero={entry.data} />;
+			}
+
+			if (config.type === "intro") {
+				return <Intro intro={entry.data} />;
+			}
+
+			if (config.type === "textBlock") {
+				return <TextBlock block={entry.data} />;
+			}
+
+			if (config.type === "cardGrid") {
+				return <CardGrid grid={entry.data} />;
+			}
+
+			if (config.type === "stepList") {
+				return <StepList steps={entry.data} />;
+			}
+
+			if (config.type === "cta") {
+				return <Cta cta={entry.data} />;
+			}
+
+			if (config.type === "contactDetails") {
+				return <ContactDetails details={entry.data} />;
+			}
+
+			if (config.type === "contactForm") {
+				return <ContactForm form={entry.data} />;
+			}
+
+			if (config.type === "projectsListing") {
+				return (
+					<ProjectsGrid
+						componentId={entry.data.componentId}
+						heading={entry.data.heading}
+						intro={entry.data.intro}
+						projects={projectEntries}
+						basePath={projectsBasePath}
+					/>
+				);
+			}
+
+			if (config.type === "knowledgeListing") {
+				return (
+					<ArticleList
+						componentId={entry.data.componentId}
+						heading={entry.data.heading}
+						intro={entry.data.intro}
+						articles={knowledgeEntries}
+						basePath={knowledgeBasePath}
+					/>
+				);
+			}
+
+			return null;
+		})
+	}
+</BaseLayout>
