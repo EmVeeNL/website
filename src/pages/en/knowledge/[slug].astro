@@ -1,0 +1,27 @@
+---
+import { getCollection, render } from "astro:content";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import ArticleDetail from "../../../components/ArticleDetail.astro";
+import { getRoutePath } from "../../../config/navigation";
+
+export async function getStaticPaths() {
+	const articles = await getCollection("knowledge", (entry) => entry.data.language === "en");
+
+	return Promise.all(
+		articles.map(async (article) => ({
+			params: { slug: article.data.slug },
+			props: { article, ...(await render(article)) },
+		})),
+	);
+}
+
+const { article, Content } = Astro.props;
+const title = article.data.seo?.title ?? article.data.title;
+const description = article.data.seo?.description ?? article.data.excerpt;
+---
+
+<BaseLayout title={title} description={description} lang="en" noindex={article.data.seo?.noindex ?? false}>
+	<ArticleDetail article={article} backHref={getRoutePath("knowledge", "en")} backLabel="All articles">
+		<Content />
+	</ArticleDetail>
+</BaseLayout>

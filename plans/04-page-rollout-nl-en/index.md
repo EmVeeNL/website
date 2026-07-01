@@ -1,6 +1,6 @@
 ---
 plan: 04-page-rollout-nl-en
-status: done (except knowledge)
+status: done
 ---
 
 # Plan 04: Page Rollout (NL/EN)
@@ -16,10 +16,12 @@ Populate real content entries for the remaining 6 nav pages
 Services, Process, Projects, About, and Contact (nl + en) are implemented
 using the real copy from `EmVee-Docs/docs/website/content/`, sourced verbatim
 rather than placeholder text — see [Plan 01, Task 01](../01-content-model-and-cms/01-design-remaining-section-component-schemas.md)
-for the schema this content is mapped into. `pnpm build` passes cleanly, all
-12 pages (6 pages × nl/en) generate. Knowledge/Kennis is **not** included —
-no real content exists for it yet in the source docs (`Structure.md` only
-lists example article titles, not full copy), so it stays open.
+for the schema this content is mapped into. Knowledge/Kennis was added
+later, once the `knowledge` collection existed — no source copy exists for
+that page in `EmVee-Docs`, so its intro/CTA text is original, written
+in-house. `pnpm build` now produces 23 pages total (was 12 for just the
+six nav pages × nl/en, plus 8 project/article detail pages and the 2
+listing pages).
 
 This landed ahead of [Plan 02](../02-routing-architecture/index.md)'s dynamic
 catch-all route refactor — each new page is a new `src/pages/*.astro` /

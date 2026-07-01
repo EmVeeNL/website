@@ -16,22 +16,26 @@ components:
     type: intro
     ref: nl/projecten/intro
     order: 1
+  - id: listing
+    type: projectsListing
+    ref: nl/projecten/listing
+    order: 2
   - id: selection-criteria
     type: textBlock
     ref: nl/projecten/selection-criteria
-    order: 2
+    order: 3
   - id: case-structure
     type: cardGrid
     ref: nl/projecten/case-structure
-    order: 3
+    order: 4
   - id: categories
     type: textBlock
     ref: nl/projecten/categories
-    order: 4
+    order: 5
   - id: cta
     type: cta
     ref: nl/projecten/cta
-    order: 5
+    order: 6
 ---
 
 ## Start writing

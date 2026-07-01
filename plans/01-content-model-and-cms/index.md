@@ -1,6 +1,6 @@
 ---
 plan: 01-content-model-and-cms
-status: planned
+status: done
 ---
 
 # Plan 01: Content Model & CMS

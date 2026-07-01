@@ -1,7 +1,7 @@
 ---
 task: 06-build-knowledge-article-list-and-card-components
 plan: 03-component-library
-status: planned
+status: done
 ---
 
 # Task: Build Knowledge article list & card components
@@ -12,22 +12,28 @@ Create `src/components/ArticleCard.astro` and `src/components/ArticleList.astro`
 for the `knowledge` collection (Plan 01, Task 02), mirroring the
 Projects grid/card split.
 
-## Steps
+## What's built
 
-- [ ] `ArticleCard.astro`: title, excerpt, formatted `publishedAt` date, tags
-- [ ] `ArticleList.astro`: array of entries, sorted by `publishedAt` descending
-- [ ] Date formatting: use `Intl.DateTimeFormat` with the page's `language`
-      (`nl-NL` / `en-GB` or similar) rather than a hardcoded locale
-- [ ] Coordinate with [Plan 02](../../02-routing-architecture/index.md) on
-      whether article detail pages use the same catch-all route or a
-      dedicated one (same open question as Projects)
+- `ArticleCard.astro`: title, excerpt, `Intl.DateTimeFormat`-formatted
+  `publishedAt` (locale picked from `article.data.language` — `nl-NL` or
+  `en-GB`, not hardcoded), tags, optional cover.
+- `ArticleList.astro`: sorts entries by `publishedAt` descending itself
+  (`toSorted`, doesn't mutate the input array) rather than trusting the
+  caller to pre-sort — verified with the 2 nl example entries (one dated
+  2026-07-01, one 2026-06-15) rendering newest-first.
+- Article detail pages: `src/pages/kennis/[slug].astro` and
+  `src/pages/en/knowledge/[slug].astro`, same dedicated-route pattern as
+  Projects (not the `[...slug].astro` catch-all).
 
 ## Acceptance criteria
 
-- Dates render correctly in both `nl` and `en`
-- List sorts correctly with mixed/missing optional fields
+- Dates render correctly in both `nl` and `en` — confirmed: nl renders
+  "1 juli 2026", en equivalent uses `en-GB` formatting
+- List sorts correctly — confirmed with mixed publish dates across the 2
+  example entries per language
 
 ## Related files
 
-- `src/content.config.ts` (`knowledge` collection, once added)
-- `src/components/ProjectCard.astro` (sibling pattern)
+- `src/content.config.ts` (`knowledge` collection)
+- `src/components/ArticleCard.astro`, `ArticleList.astro`, `ArticleDetail.astro`
+- `src/pages/kennis/[slug].astro`, `src/pages/en/knowledge/[slug].astro`

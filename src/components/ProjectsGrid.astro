@@ -1,0 +1,37 @@
+---
+import type { CollectionEntry } from "astro:content";
+import ProjectCard from "./ProjectCard.astro";
+
+type Props = {
+	componentId?: string;
+	heading?: string;
+	intro?: string;
+	projects: CollectionEntry<"projects">[];
+	basePath: string;
+	emptyMessage?: string;
+};
+
+const { componentId, heading, intro, projects, basePath, emptyMessage } = Astro.props as Props;
+---
+
+<section id={componentId} data-reveal class="px-6 py-10 md:px-12 lg:px-20 lg:py-16">
+	<div class="mx-auto max-w-6xl">
+		{heading && (
+			<h2 class="max-w-[24ch] text-[clamp(1.5rem,4vw,2.25rem)] font-bold leading-[1.14] text-foreground">
+				{heading}
+			</h2>
+		)}
+
+		{intro && <p class="mt-4 max-w-[60ch] text-[1.0625rem] leading-[1.75] text-foreground-muted sm:text-lg">{intro}</p>}
+
+		{projects.length > 0 ? (
+			<div class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+				{projects.map((project) => (
+					<ProjectCard project={project} href={`${basePath}/${project.data.slug}`} />
+				))}
+			</div>
+		) : (
+			emptyMessage && <p class="mt-8 text-[0.9375rem] leading-6 text-foreground-muted">{emptyMessage}</p>
+		)}
+	</div>
+</section>

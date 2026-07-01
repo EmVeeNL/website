@@ -10,6 +10,13 @@ const actionSchema = z.object({
 	href: z.string(),
 });
 
+const seoSchema = z.object({
+	title: z.string().optional(),
+	description: z.string().optional(),
+	canonical: z.string().optional(),
+	noindex: z.boolean().default(false),
+});
+
 /* -------------------------------------------------------------------------- */
 /*  Pages                                                                      */
 /*  A page is the top-level content entry. It carries SEO/navigation metadata  */
@@ -23,14 +30,7 @@ const pages = defineCollection({
 		description: z.string(),
 		status: statusSchema.default("Draft"),
 		language: languageSchema,
-		seo: z
-			.object({
-				title: z.string().optional(),
-				description: z.string().optional(),
-				canonical: z.string().optional(),
-				noindex: z.boolean().default(false),
-			})
-			.optional(),
+		seo: seoSchema.optional(),
 		navigation: z
 			.object({
 				label: z.string().optional(),
@@ -173,6 +173,23 @@ const contactFormSchema = componentBaseSchema.extend({
 	errorMessage: z.string(),
 });
 
+/**
+ * Anchors a position in a page's `components[]` list without holding its own
+ * content — the rendered content comes from the `projects`/`knowledge`
+ * collections directly, filtered by the page's language. See PageRenderer.astro.
+ */
+const projectsListingSchema = componentBaseSchema.extend({
+	type: z.literal("projectsListing"),
+	heading: z.string().optional(),
+	intro: z.string().optional(),
+});
+
+const knowledgeListingSchema = componentBaseSchema.extend({
+	type: z.literal("knowledgeListing"),
+	heading: z.string().optional(),
+	intro: z.string().optional(),
+});
+
 const componentSchema = z.discriminatedUnion("type", [
 	heroSchema,
 	introSchema,
@@ -182,6 +199,8 @@ const componentSchema = z.discriminatedUnion("type", [
 	ctaSchema,
 	contactDetailsSchema,
 	contactFormSchema,
+	projectsListingSchema,
+	knowledgeListingSchema,
 ]);
 
 const components = defineCollection({
@@ -189,4 +208,47 @@ const components = defineCollection({
 	schema: componentSchema,
 });
 
-export const collections = { pages, components };
+/* -------------------------------------------------------------------------- */
+/*  Projects                                                                   */
+/*  Independently addressable case studies — not a page section, each entry   */
+/*  gets its own detail page. Not every project needs an nl AND en version.   */
+/* -------------------------------------------------------------------------- */
+const projects = defineCollection({
+	loader: glob({ pattern: "**/*.md", base: "./src/content/projects" }),
+	schema: ({ image }) =>
+		z.object({
+			title: z.string(),
+			slug: z.string(),
+			language: languageSchema,
+			summary: z.string(),
+			client: z.string().optional(),
+			year: z.number().optional(),
+			cover: image().optional(),
+			tags: z.array(z.string()).default([]),
+			status: statusSchema.default("Draft"),
+			seo: seoSchema.optional(),
+		}),
+});
+
+/* -------------------------------------------------------------------------- */
+/*  Knowledge                                                                  */
+/*  Independently addressable articles — same shape as projects, dated and    */
+/*  sorted newest first on the listing page.                                  */
+/* -------------------------------------------------------------------------- */
+const knowledge = defineCollection({
+	loader: glob({ pattern: "**/*.md", base: "./src/content/knowledge" }),
+	schema: ({ image }) =>
+		z.object({
+			title: z.string(),
+			slug: z.string(),
+			language: languageSchema,
+			excerpt: z.string(),
+			publishedAt: z.coerce.date(),
+			cover: image().optional(),
+			tags: z.array(z.string()).default([]),
+			status: statusSchema.default("Draft"),
+			seo: seoSchema.optional(),
+		}),
+});
+
+export const collections = { pages, components, projects, knowledge };
