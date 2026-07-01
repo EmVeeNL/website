@@ -1,0 +1,328 @@
+{
+  "$schema": "https://frontmatter.codes/frontmatter.schema.json",
+  "frontMatter.framework.id": "astro",
+  "frontMatter.preview.host": "http://localhost:4321",
+  "frontMatter.content.publicFolder": {
+    "path": "src/assets",
+    "relative": true
+  },
+  "frontMatter.taxonomy.contentTypeField": "type",
+  "frontMatter.content.pageFolders": [
+    {
+      "title": "Pages (English)",
+      "path": "[[workspace]]/src/content/pages/en",
+      "contentTypes": [
+        "page"
+      ],
+      "defaultLocale": "en",
+      "previewPath": ""
+    },
+    {
+      "title": "Pages (Dutch)",
+      "path": "[[workspace]]/src/content/pages/nl",
+      "contentTypes": [
+        "page"
+      ],
+      "defaultLocale": "nl",
+      "previewPath": ""
+    },
+    {
+      "title": "Components (English)",
+      "path": "[[workspace]]/src/content/components/en",
+      "contentTypes": [
+        "component",
+        "hero"
+      ],
+      "defaultLocale": "en"
+    },
+    {
+      "title": "Components (Dutch)",
+      "path": "[[workspace]]/src/content/components/nl",
+      "contentTypes": [
+        "component",
+        "hero"
+      ],
+      "defaultLocale": "nl"
+    }
+  ],
+  "frontMatter.taxonomy.contentTypes": [
+    {
+      "name": "page",
+      "pageBundle": false,
+      "fields": [
+        {
+          "title": "Title",
+          "name": "title",
+          "type": "string",
+          "required": true
+        },
+        {
+          "title": "Slug",
+          "name": "slug",
+          "type": "string",
+          "required": true
+        },
+        {
+          "title": "Description",
+          "name": "description",
+          "type": "string",
+          "single": false,
+          "required": true
+        },
+        {
+          "title": "Status",
+          "name": "status",
+          "type": "choice",
+          "choices": [
+            "Draft",
+            "Published"
+          ],
+          "default": "Draft"
+        },
+        {
+          "title": "Language",
+          "name": "language",
+          "type": "choice",
+          "choices": [
+            "nl",
+            "en"
+          ],
+          "required": true
+        },
+        {
+          "title": "SEO",
+          "name": "seo",
+          "type": "fields",
+          "fields": [
+            {
+              "title": "SEO Title",
+              "name": "title",
+              "type": "string"
+            },
+            {
+              "title": "SEO Description",
+              "name": "description",
+              "type": "string",
+              "single": false
+            },
+            {
+              "title": "Canonical URL",
+              "name": "canonical",
+              "type": "string"
+            },
+            {
+              "title": "Noindex",
+              "name": "noindex",
+              "type": "boolean",
+              "default": false
+            }
+          ]
+        },
+        {
+          "title": "Navigation",
+          "name": "navigation",
+          "type": "fields",
+          "fields": [
+            {
+              "title": "Label",
+              "name": "label",
+              "type": "string"
+            },
+            {
+              "title": "Order",
+              "name": "order",
+              "type": "number"
+            }
+          ]
+        },
+        {
+          "title": "Components",
+          "name": "components",
+          "type": "block",
+          "fieldGroup": [
+            "componentRef"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "component",
+      "pageBundle": false,
+      "fields": [
+        {
+          "title": "Title",
+          "name": "title",
+          "type": "string",
+          "required": true
+        },
+        {
+          "title": "Type",
+          "name": "type",
+          "type": "string",
+          "required": true
+        },
+        {
+          "title": "Language",
+          "name": "language",
+          "type": "choice",
+          "choices": [
+            "nl",
+            "en"
+          ],
+          "required": true
+        },
+        {
+          "title": "Page",
+          "name": "page",
+          "type": "string",
+          "required": true
+        },
+        {
+          "title": "Component ID",
+          "name": "componentId",
+          "type": "string",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "hero",
+      "pageBundle": false,
+      "fields": [
+        {
+          "title": "Title",
+          "name": "title",
+          "type": "string",
+          "required": true
+        },
+        {
+          "title": "Type",
+          "name": "type",
+          "type": "string",
+          "default": "hero",
+          "required": true
+        },
+        {
+          "title": "Language",
+          "name": "language",
+          "type": "choice",
+          "choices": [
+            "nl",
+            "en"
+          ],
+          "required": true
+        },
+        {
+          "title": "Page",
+          "name": "page",
+          "type": "string",
+          "required": true
+        },
+        {
+          "title": "Component ID",
+          "name": "componentId",
+          "type": "string",
+          "required": true
+        },
+        {
+          "title": "Eyebrow",
+          "name": "eyebrow",
+          "type": "string"
+        },
+        {
+          "title": "Heading",
+          "name": "heading",
+          "type": "fields",
+          "fields": [
+            {
+              "title": "Before",
+              "name": "before",
+              "type": "string"
+            },
+            {
+              "title": "Highlight",
+              "name": "highlight",
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "title": "Text",
+          "name": "text",
+          "type": "list"
+        },
+        {
+          "title": "Primary action",
+          "name": "primaryAction",
+          "type": "fields",
+          "fields": [
+            {
+              "title": "Label",
+              "name": "label",
+              "type": "string"
+            },
+            {
+              "title": "Href",
+              "name": "href",
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "title": "Secondary action",
+          "name": "secondaryAction",
+          "type": "fields",
+          "fields": [
+            {
+              "title": "Label",
+              "name": "label",
+              "type": "string"
+            },
+            {
+              "title": "Href",
+              "name": "href",
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "title": "Services",
+          "name": "services",
+          "type": "list"
+        },
+        {
+          "title": "Points",
+          "name": "points",
+          "type": "list"
+        }
+      ]
+    }
+  ],
+  "frontMatter.taxonomy.fieldGroups": [
+    {
+      "id": "componentRef",
+      "fields": [
+        {
+          "title": "id",
+          "name": "id",
+          "type": "string"
+        },
+        {
+          "title": "type",
+          "name": "type",
+          "type": "string"
+        },
+        {
+          "title": "ref",
+          "name": "ref",
+          "type": "string"
+        },
+        {
+          "title": "order",
+          "name": "order",
+          "type": "number"
+        }
+      ]
+    }
+  ]
+}

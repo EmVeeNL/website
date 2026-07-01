@@ -1,0 +1,71 @@
+---
+import Footer from "../components/Footer.astro";
+import Header from "../components/Header.astro";
+import MainContent from "../components/MainContent.astro";
+import { Font } from "astro:assets";
+import "../styles/global.css";
+
+type Props = {
+	title?: string;
+	description?: string;
+	lang?: string;
+	bodyClass?: string;
+	mainClass?: string;
+};
+
+const {
+	title = "EMVEE",
+	description = "EMVEE",
+	lang = "nl",
+	bodyClass,
+	mainClass,
+} = Astro.props as Props;
+---
+
+<!doctype html>
+<html lang={lang}>
+	<head>
+		<meta charset="utf-8" />
+		<script is:inline>
+			(() => {
+				const storageKey = "emvee-theme";
+				const storedTheme = localStorage.getItem(storageKey);
+				const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+				const theme = storedTheme === "light" || storedTheme === "dark"
+					? storedTheme
+					: prefersDark
+						? "dark"
+						: "light";
+
+				document.documentElement.dataset.theme = theme;
+			})();
+		</script>
+		<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+		<meta name="generator" content={Astro.generator} />
+		<meta name="description" content={description} />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" href="/favicon.ico" sizes="any" />
+		<Font
+			cssVariable="--font-chocopie"
+			preload={[
+				{ weight: 400, style: "normal" },
+				{ weight: 700, style: "normal" },
+				{ weight: 900, style: "normal" },
+			]}
+		/>
+		<Font cssVariable="--font-geist" preload={[{ weight: 400, style: "normal", subset: "latin" }]} />
+		<Font cssVariable="--font-geist-mono" preload={false} />
+		<title>{title}</title>
+		<slot name="head" />
+	</head>
+	<body class={bodyClass}>
+		<a class="skip-link" href="#main-content">Naar inhoud</a>
+		<div class="flex min-h-screen flex-col bg-background text-foreground">
+			<Header />
+			<MainContent class={mainClass}>
+				<slot />
+			</MainContent>
+			<Footer />
+		</div>
+	</body>
+</html>

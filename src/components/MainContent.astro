@@ -1,0 +1,11 @@
+---
+type Props = {
+	class?: string;
+};
+
+const { class: className } = Astro.props as Props;
+---
+
+<main id="main-content" class:list={["flex-1", className]}>
+	<slot />
+</main>
