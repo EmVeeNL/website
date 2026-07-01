@@ -1,7 +1,7 @@
 ---
 task: 01-configure-workers-static-assets
 plan: 06-deployment-cloudflare
-status: configured, first deploy pending
+status: done
 ---
 
 # Task: Configure Workers Static Assets
@@ -22,7 +22,11 @@ Cloudflare Worker, without adding the Astro SSR adapter.
       slash behavior, `build.format`)
 - [x] `wrangler dev` locally to verify the built site serves correctly
       before first deploy
-- [ ] `wrangler deploy` for the first live deployment — **not yet done, needs explicit go-ahead**
+- [x] `wrangler deploy` for the first live deployment — live at https://emvee-website.frosty-hill-6079.workers.dev
+
+## Deployed
+
+Live at https://emvee-website.frosty-hill-6079.workers.dev — deployed 2026-07-01. All nl/en routes and the 404 page verified working.
 
 ## Acceptance criteria
 

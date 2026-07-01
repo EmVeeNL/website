@@ -1,9 +1,13 @@
 // @ts-check
+import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 import { defineConfig, fontProviders } from 'astro/config';
 
 // https://astro.build/config
 export default defineConfig({
+	// TODO: update to the custom domain once one is configured (plans/06-deployment-cloudflare)
+	site: 'https://emvee-website.frosty-hill-6079.workers.dev',
+	integrations: [sitemap()],
 	fonts: [
 		{
 			provider: fontProviders.local(),

@@ -5,10 +5,18 @@ import MainContent from "../components/MainContent.astro";
 import { Font } from "astro:assets";
 import "../styles/global.css";
 
+type HreflangAlternate = {
+	lang: string;
+	href: string;
+};
+
 type Props = {
 	title?: string;
 	description?: string;
 	lang?: string;
+	canonical?: string;
+	noindex?: boolean;
+	alternates?: HreflangAlternate[];
 	bodyClass?: string;
 	mainClass?: string;
 };
@@ -17,6 +25,9 @@ const {
 	title = "EMVEE",
 	description = "EMVEE",
 	lang = "nl",
+	canonical,
+	noindex = false,
+	alternates,
 	bodyClass,
 	mainClass,
 } = Astro.props as Props;
@@ -43,6 +54,9 @@ const {
 		<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 		<meta name="generator" content={Astro.generator} />
 		<meta name="description" content={description} />
+		{noindex && <meta name="robots" content="noindex" />}
+		{canonical && <link rel="canonical" href={canonical} />}
+		{alternates?.map((alternate) => <link rel="alternate" hreflang={alternate.lang} href={alternate.href} />)}
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" href="/favicon.ico" sizes="any" />
 		<Font
