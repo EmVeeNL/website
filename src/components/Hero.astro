@@ -78,13 +78,13 @@ const headingHighlight = hero.heading?.highlight ?? "";
 
 	<div class="relative z-10 w-full max-w-[45rem]">
 		{hero.eyebrow && (
-			<p class="mb-6 inline-flex items-center gap-3 whitespace-nowrap text-[0.6875rem] font-bold uppercase leading-5 tracking-[0.14em] text-brand-secondary sm:mb-7 sm:text-sm sm:tracking-[0.2em] dark:text-accent">
+			<p data-hero-stagger class="mb-6 inline-flex items-center gap-3 whitespace-nowrap text-[0.6875rem] font-bold uppercase leading-5 tracking-[0.14em] text-brand-secondary sm:mb-7 sm:text-sm sm:tracking-[0.2em] dark:text-accent">
 				<span aria-hidden="true" class="h-px w-6 shrink-0 bg-linear-to-r from-accent to-transparent sm:w-8"></span>
 				<span>{hero.eyebrow}</span>
 			</p>
 		)}
 
-		<h1 class="max-w-[11.5ch] text-balance text-[clamp(2.3rem,11.5vw,4rem)] font-bold leading-[1.06] tracking-normal text-foreground sm:text-[clamp(2.75rem,8vw,4.75rem)] lg:text-[clamp(3.5rem,5.5vw,5.15rem)] lg:leading-[1.08]">
+		<h1 data-hero-stagger class="max-w-[11.5ch] text-balance text-[clamp(2.3rem,11.5vw,4rem)] font-bold leading-[1.06] tracking-normal text-foreground sm:text-[clamp(2.75rem,8vw,4.75rem)] lg:text-[clamp(3.5rem,5.5vw,5.15rem)] lg:leading-[1.08]">
 			<span class="block" set:html={markBrandPunctuation(headingBefore)} />
 			<span
 				class="mt-[0.06em] block bg-[linear-gradient(110deg,#0266E3_10%,#0A9DE3_55%,#05DAFD_90%)] bg-clip-text text-transparent"
@@ -94,13 +94,14 @@ const headingHighlight = hero.heading?.highlight ?? "";
 
 		{heroTextHtml && (
 			<p
+				data-hero-stagger
 				class="mt-7 max-w-[38rem] text-[1.0625rem] leading-[1.75] text-foreground-muted sm:text-lg lg:mt-8 lg:text-[clamp(1.125rem,1.35vw,1.3125rem)]"
 				set:html={heroTextHtml}
 			/>
 		)}
 
 		{(hero.primaryAction || hero.secondaryAction) && (
-			<div class="mt-8 flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:gap-5 lg:mt-9">
+			<div data-hero-stagger class="mt-8 flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:gap-5 lg:mt-9">
 				{hero.primaryAction && (
 					<a
 						href={hero.primaryAction.href}
@@ -124,7 +125,7 @@ const headingHighlight = hero.heading?.highlight ?? "";
 		)}
 
 		{hero.points?.length ? (
-			<ul class="mt-9 grid max-w-[44rem] gap-4 text-[0.9375rem] leading-6 text-foreground-muted sm:mt-10 sm:flex sm:flex-wrap sm:items-center sm:gap-x-8 sm:gap-y-4">
+			<ul data-hero-stagger class="mt-9 grid max-w-[44rem] gap-4 text-[0.9375rem] leading-6 text-foreground-muted sm:mt-10 sm:flex sm:flex-wrap sm:items-center sm:gap-x-8 sm:gap-y-4">
 				{hero.points.map((point) => (
 					<li class="flex items-center gap-3">
 						<span aria-hidden="true" class="grid size-5 shrink-0 place-items-center rounded-full bg-brand-secondary/15">
@@ -137,3 +138,23 @@ const headingHighlight = hero.heading?.highlight ?? "";
 		) : null}
 	</div>
 </section>
+
+<script>
+	// Staggered entrance on load, not scroll-gated — the hero is always above the fold.
+	// The LCP hero images are untouched; only text/CTA content animates.
+	import { animate, stagger } from "motion";
+
+	const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+	if (!prefersReducedMotion) {
+		const elements = document.querySelectorAll<HTMLElement>("[data-hero-stagger]");
+
+		if (elements.length > 0) {
+			animate(
+				elements,
+				{ opacity: [0, 1], transform: ["translateY(16px)", "translateY(0px)"] },
+				{ duration: 0.5, delay: stagger(0.08), easing: "ease-out" },
+			);
+		}
+	}
+</script>

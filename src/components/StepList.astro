@@ -28,7 +28,7 @@ type Props = {
 const { steps } = Astro.props as Props;
 ---
 
-<section id={steps.componentId} class="px-6 py-10 md:px-12 lg:px-20 lg:py-16">
+<section id={steps.componentId} data-reveal class="px-6 py-10 md:px-12 lg:px-20 lg:py-16">
 	<div class="mx-auto max-w-6xl">
 		{steps.eyebrow && (
 			<p class="mb-4 inline-flex items-center gap-3 whitespace-nowrap text-[0.6875rem] font-bold uppercase leading-5 tracking-[0.14em] text-brand-secondary sm:text-sm sm:tracking-[0.2em] dark:text-accent">

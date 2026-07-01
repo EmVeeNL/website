@@ -176,6 +176,16 @@
 	.skip-link:focus {
 		transform: translateY(0);
 	}
+
+	.theme-toggle__moon,
+	.theme-toggle__sun {
+		grid-area: 1 / 1;
+	}
+
+	.theme-toggle__sun {
+		opacity: 0;
+		transform: scale(0.5) rotate(-30deg);
+	}
 }
 
 @layer components {

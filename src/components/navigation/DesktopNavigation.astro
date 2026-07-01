@@ -68,7 +68,9 @@ const { navigationItems, languageItems, contactHref } = Astro.props as Props;
 			aria-pressed="false"
 			data-theme-toggle
 		>
-			<slot name="theme-icons" />
+			<span class="relative inline-grid place-items-center">
+				<slot name="theme-icons" />
+			</span>
 		</button>
 
 		<a
