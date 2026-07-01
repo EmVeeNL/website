@@ -1,0 +1,43 @@
+---
+type ContactDetailsContent = {
+	componentId?: string;
+	language?: "nl" | "en";
+	email: string;
+	phone: string;
+	location: string;
+	note?: string;
+};
+
+type Props = {
+	details: ContactDetailsContent;
+};
+
+const { details } = Astro.props as Props;
+
+const labels = details.language === "en"
+	? { email: "Email", phone: "Phone", location: "Location" }
+	: { email: "E-mail", phone: "Telefoon", location: "Locatie" };
+---
+
+<section id={details.componentId} class="px-6 py-10 md:px-12 lg:px-20 lg:py-16">
+	<div class="mx-auto max-w-6xl">
+		<dl class="grid gap-6 sm:grid-cols-3">
+			<div>
+				<dt class="text-[0.6875rem] font-bold uppercase tracking-[0.14em] text-foreground-subtle">{labels.email}</dt>
+				<dd class="mt-2 text-[1.0625rem] leading-[1.5] text-foreground">{details.email}</dd>
+			</div>
+
+			<div>
+				<dt class="text-[0.6875rem] font-bold uppercase tracking-[0.14em] text-foreground-subtle">{labels.phone}</dt>
+				<dd class="mt-2 text-[1.0625rem] leading-[1.5] text-foreground">{details.phone}</dd>
+			</div>
+
+			<div>
+				<dt class="text-[0.6875rem] font-bold uppercase tracking-[0.14em] text-foreground-subtle">{labels.location}</dt>
+				<dd class="mt-2 text-[1.0625rem] leading-[1.5] text-foreground">{details.location}</dd>
+			</div>
+		</dl>
+
+		{details.note && <p class="mt-6 max-w-[60ch] text-[0.9375rem] leading-6 text-foreground-muted">{details.note}</p>}
+	</div>
+</section>

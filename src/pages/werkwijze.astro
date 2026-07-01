@@ -1,0 +1,77 @@
+---
+import { getCollection } from "astro:content";
+import CardGrid from "../components/CardGrid.astro";
+import ContactDetails from "../components/ContactDetails.astro";
+import Cta from "../components/Cta.astro";
+import Hero from "../components/Hero.astro";
+import Intro from "../components/Intro.astro";
+import StepList from "../components/StepList.astro";
+import TextBlock from "../components/TextBlock.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const pages = await getCollection("pages");
+const componentEntries = await getCollection("components");
+const page = pages.find((entry) => entry.data.language === "nl" && entry.data.slug === "/werkwijze");
+
+if (!page) {
+	throw new Error("Missing content entry: pages/nl/werkwijze");
+}
+
+const components = page.data.components
+	.toSorted((a, b) => (a.order ?? 0) - (b.order ?? 0))
+	.map((component) => ({
+		config: component,
+		entry: componentEntries.find((entry) => {
+			const dataRef = `${entry.data.language}/${entry.data.page}/${entry.data.componentId}`;
+
+			return entry.id === component.ref || entry.id === `${component.ref}.md` || dataRef === component.ref;
+		}),
+	}));
+
+for (const component of components) {
+	if (!component.entry) {
+		throw new Error(`Missing component entry: components/${component.config.ref}`);
+	}
+}
+
+const title = page.data.seo?.title ?? page.data.title;
+const description = page.data.seo?.description ?? page.data.description;
+---
+
+<BaseLayout title={title} description={description} lang={page.data.language}>
+	{
+		components.map(({ config, entry }) => {
+			if (!entry) return null;
+
+			if (config.type === "hero") {
+				return <Hero hero={entry.data} />;
+			}
+
+			if (config.type === "intro") {
+				return <Intro intro={entry.data} />;
+			}
+
+			if (config.type === "textBlock") {
+				return <TextBlock block={entry.data} />;
+			}
+
+			if (config.type === "cardGrid") {
+				return <CardGrid grid={entry.data} />;
+			}
+
+			if (config.type === "stepList") {
+				return <StepList steps={entry.data} />;
+			}
+
+			if (config.type === "cta") {
+				return <Cta cta={entry.data} />;
+			}
+
+			if (config.type === "contactDetails") {
+				return <ContactDetails details={entry.data} />;
+			}
+
+			return null;
+		})
+	}
+</BaseLayout>

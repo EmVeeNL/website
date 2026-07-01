@@ -1,0 +1,62 @@
+---
+type TextBlockContent = {
+	componentId?: string;
+	heading?: string;
+	body?: string[];
+	list?: string[];
+	listStyle?: "bullet" | "number";
+	afterList?: string[];
+};
+
+type Props = {
+	block: TextBlockContent;
+};
+
+const { block } = Astro.props as Props;
+const ListTag = block.listStyle === "number" ? "ol" : "ul";
+---
+
+<section id={block.componentId} class="px-6 py-10 md:px-12 lg:px-20 lg:py-16">
+	<div class="mx-auto max-w-6xl">
+		{block.heading && (
+			<h2 class="max-w-[24ch] text-[clamp(1.5rem,4vw,2.25rem)] font-bold leading-[1.14] text-foreground">
+				{block.heading}
+			</h2>
+		)}
+
+		{block.body?.length ? (
+			<div class="mt-5 max-w-[60ch] space-y-4 text-[1.0625rem] leading-[1.75] text-foreground-muted sm:text-lg">
+				{block.body.map((paragraph) => <p>{paragraph}</p>)}
+			</div>
+		) : null}
+
+		{block.list?.length ? (
+			<ListTag
+				class={
+					ListTag === "ol"
+						? "mt-6 max-w-[60ch] list-decimal space-y-3 pl-5 text-[0.9375rem] leading-6 text-foreground-muted marker:font-bold marker:text-accent"
+						: "mt-6 max-w-[60ch] space-y-3 text-[0.9375rem] leading-6 text-foreground-muted"
+				}
+			>
+				{block.list.map((item) => (
+					ListTag === "ol" ? (
+						<li>{item}</li>
+					) : (
+						<li class="flex items-start gap-3">
+							<span aria-hidden="true" class="mt-2 grid size-5 shrink-0 place-items-center rounded-full bg-brand-secondary/15">
+								<span class="size-1.5 rounded-full bg-accent"></span>
+							</span>
+							<span>{item}</span>
+						</li>
+					)
+				))}
+			</ListTag>
+		) : null}
+
+		{block.afterList?.length ? (
+			<div class="mt-6 max-w-[60ch] space-y-4 text-[1.0625rem] leading-[1.75] text-foreground-muted sm:text-lg">
+				{block.afterList.map((paragraph) => <p>{paragraph}</p>)}
+			</div>
+		) : null}
+	</div>
+</section>
