@@ -1,5 +1,5 @@
 ---
-import { getCollection, type CollectionEntry } from "astro:content";
+import { getCollection, render, type CollectionEntry } from "astro:content";
 import ArticleList from "./ArticleList.astro";
 import CardGrid from "./CardGrid.astro";
 import ContactDetails from "./ContactDetails.astro";
@@ -58,6 +58,12 @@ for (const component of components) {
 const title = page.data.seo?.title ?? page.data.title;
 const description = page.data.seo?.description ?? page.data.description;
 const noindex = page.data.seo?.noindex ?? false;
+
+// Pages with no components[] (e.g. legal pages) render their own markdown
+// body directly instead of being composed from section components — long-form
+// prose like a privacy policy doesn't decompose into intro/textBlock/cardGrid
+// without pointless restructuring.
+const { Content } = page.data.components.length === 0 ? await render(page) : { Content: null };
 ---
 
 <BaseLayout
@@ -68,6 +74,15 @@ const noindex = page.data.seo?.noindex ?? false;
 	noindex={noindex}
 	alternates={alternates}
 >
+	{
+		Content && (
+			<article class="px-6 py-10 md:px-12 lg:px-20 lg:py-16">
+				<div class="prose-content mx-auto max-w-3xl space-y-4 text-[1.0625rem] leading-[1.75] text-foreground-muted sm:text-lg">
+					<Content />
+				</div>
+			</article>
+		)
+	}
 	{
 		components.map(({ config, entry }) => {
 			if (!entry) return null;

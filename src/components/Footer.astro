@@ -1,6 +1,62 @@
+---
+import logoDark from "../assets/images/logo-light.png";
+import logoLight from "../assets/images/logo-dark.png";
+import { getLanguageForPath, getNavigationItems, getRoutePath, legalPages } from "../config/navigation";
+
+const currentPath = Astro.url.pathname;
+const activeLanguage = getLanguageForPath(currentPath);
+const navigationItems = getNavigationItems(activeLanguage, currentPath).filter((item) => item.id !== "home");
+const homeHref = getRoutePath("home", activeLanguage);
+
+const tagline = activeLanguage === "en"
+	? "Calm, reliable digital solutions."
+	: "Rustige, betrouwbare digitale oplossingen.";
+
+const rightsReserved = activeLanguage === "en" ? "All rights reserved." : "Alle rechten voorbehouden.";
+---
+
 <footer class="mt-auto border-t border-border-subtle bg-background-subtle">
-	<div class="mx-auto flex flex-col gap-3 px-5 py-8 text-sm text-foreground-muted md:flex-row md:items-center md:justify-between md:px-8 xl:px-20">
-		<p>&copy; {new Date().getFullYear()} EMVEE. Alle rechten voorbehouden.</p>
-		<p>Dummy footer</p>
+	<div class="mx-auto px-5 py-12 md:px-8 md:py-16 xl:px-20">
+		<div class="flex flex-col gap-10 md:flex-row md:items-start md:justify-between">
+			<div class="max-w-xs">
+				<a class="inline-flex min-h-11 w-fit items-center rounded-sm focus-visible:outline-offset-4" href={homeHref} aria-label="EMVEE home">
+					<img class="h-8 w-auto dark:hidden" src={logoDark.src} alt="EMVEE" width={128} height={60} loading="lazy" decoding="async" />
+					<img class="hidden h-8 w-auto dark:block" src={logoLight.src} alt="EMVEE" width={128} height={60} loading="lazy" decoding="async" />
+				</a>
+				<p class="mt-4 text-[0.9375rem] leading-6 text-foreground-muted">{tagline}</p>
+			</div>
+
+			<nav aria-label="Footer navigatie">
+				<ul class="grid grid-cols-2 gap-x-10 gap-y-3 text-[0.9375rem] sm:grid-cols-3">
+					{navigationItems.map((item) => (
+						<li>
+							<a
+								class="text-foreground-muted no-underline transition-colors duration-150 hover:text-foreground focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--color-focus)]"
+								href={item.href}
+							>
+								{item.label}
+							</a>
+						</li>
+					))}
+				</ul>
+			</nav>
+		</div>
+
+		<div class="mt-10 flex flex-col gap-4 border-t border-border-subtle pt-6 text-[0.8125rem] text-foreground-subtle sm:flex-row sm:items-center sm:justify-between">
+			<p>&copy; {new Date().getFullYear()} EMVEE. {rightsReserved}</p>
+
+			<ul class="flex gap-5">
+				{legalPages.map((page) => (
+					<li>
+						<a
+							class="no-underline transition-colors duration-150 hover:text-foreground focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--color-focus)]"
+							href={page.path[activeLanguage]}
+						>
+							{page.label[activeLanguage]}
+						</a>
+					</li>
+				))}
+			</ul>
+		</div>
 	</div>
 </footer>

@@ -31,6 +31,27 @@ export type LanguageSwitcherItem = {
 	isActive: boolean;
 };
 
+export type LegalPageId = "privacy" | "terms";
+
+export type LegalPage = {
+	id: LegalPageId;
+	label: Record<Language, string>;
+	path: Record<Language, string>;
+};
+
+export const legalPages: LegalPage[] = [
+	{
+		id: "privacy",
+		label: { nl: "Privacy", en: "Privacy" },
+		path: { nl: "/privacy", en: "/en/privacy" },
+	},
+	{
+		id: "terms",
+		label: { nl: "Voorwaarden", en: "Terms" },
+		path: { nl: "/voorwaarden", en: "/en/terms" },
+	},
+];
+
 export const defaultLanguage: Language = "nl";
 
 export const navigationPages: NavigationPage[] = [
