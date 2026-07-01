@@ -4,6 +4,7 @@ type: textBlock
 language: nl
 page: home
 componentId: long-term
+image: ../../../../assets/images/homepage/long-term-quality.png
 heading: Gebouwd voor de lange termijn
 body:
   - Een oplossing is pas goed wanneer zij niet alleen vandaag werkt.

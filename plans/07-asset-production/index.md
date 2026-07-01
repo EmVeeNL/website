@@ -1,6 +1,6 @@
 ---
 plan: 07-asset-production
-status: planned
+status: in progress — homepage done
 ---
 
 # Plan 07: Asset Production
@@ -25,9 +25,11 @@ This plan tracks, per page, which prompt scenes get generated, reviewed, optimiz
 6. Provide functional alt text (or empty `alt=""` if purely decorative) and explicit width/height to avoid layout shift.
 7. Check both light and dark mode — several prompts have dedicated dark/light variants (see `00-foundation.md`'s variant blocks); decide per image whether one asset works in both themes or two are needed.
 
+Update from the homepage pass: this plan was originally written assuming *I* would generate images, which turned out to be impossible — no image-generation tool is available in this environment. Images have to be generated externally (by a human, using `docs/image-prompts/`) and dropped into the repo; wiring them in from there is what I can actually do. Update the "General process" above accordingly for future pages: step 3 (generate) happens outside this workflow.
+
 ## Tasks
 
-1. [Homepage assets](01-homepage-assets.md)
+1. [Homepage assets](01-homepage-assets.md) — done, except the footer background and hero (untouched by design)
 2. [Services assets](02-services-assets.md)
 3. [Process assets](03-process-assets.md)
 4. [Projects assets](04-projects-assets.md)

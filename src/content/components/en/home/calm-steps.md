@@ -4,6 +4,7 @@ type: stepList
 language: en
 page: home
 componentId: calm-steps
+image: ../../../../assets/images/homepage/process-preview.png
 heading: Clarity in every phase
 intro: A strong digital product does not begin by moving as quickly as possible. It begins by creating clarity.
 action:

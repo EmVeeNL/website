@@ -1,4 +1,6 @@
 ---
+import type { ImageMetadata } from "astro";
+import { Image } from "astro:assets";
 import Icon from "./Icon.astro";
 
 type IntroAction = {
@@ -14,6 +16,7 @@ type IntroContent = {
 	list?: string[];
 	primaryAction?: IntroAction;
 	secondaryAction?: IntroAction;
+	image?: ImageMetadata;
 };
 
 type Props = {
@@ -24,7 +27,8 @@ const { intro } = Astro.props as Props;
 ---
 
 <section id={intro.componentId} data-reveal class="px-6 py-10 md:px-12 lg:px-20 lg:py-28">
-	<div class="mx-auto max-w-6xl">
+	<div class:list={["mx-auto max-w-6xl", intro.image && "lg:grid lg:grid-cols-12 lg:items-center lg:gap-12"]}>
+	<div class:list={intro.image && "lg:col-span-6"}>
 		{intro.eyebrow && (
 			<p class="mb-6 inline-flex items-center gap-3 whitespace-nowrap text-[0.6875rem] font-bold uppercase leading-5 tracking-[0.14em] text-brand-secondary sm:mb-7 sm:text-sm sm:tracking-[0.2em] dark:text-accent">
 				<span aria-hidden="true" class="h-px w-6 shrink-0 bg-linear-to-r from-accent to-transparent sm:w-8"></span>
@@ -78,5 +82,18 @@ const { intro } = Astro.props as Props;
 				)}
 			</div>
 		)}
+	</div>
+
+	{intro.image && (
+		<div class="mt-8 lg:col-span-6 lg:mt-0">
+			<Image
+				src={intro.image}
+				alt=""
+				width={640}
+				height={480}
+				class="aspect-[4/3] w-full rounded-2xl object-cover"
+			/>
+		</div>
+	)}
 	</div>
 </section>
