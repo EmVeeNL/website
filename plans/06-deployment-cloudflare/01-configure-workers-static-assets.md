@@ -1,7 +1,7 @@
 ---
 task: 01-configure-workers-static-assets
 plan: 06-deployment-cloudflare
-status: planned
+status: configured, first deploy pending
 ---
 
 # Task: Configure Workers Static Assets
@@ -13,17 +13,16 @@ Cloudflare Worker, without adding the Astro SSR adapter.
 
 ## Steps
 
-- [ ] Consult the `wrangler` skill for current `assets` binding syntax before
+- [x] Consult the `wrangler` skill for current `assets` binding syntax before
       writing config (this shifts between Wrangler versions)
-- [ ] `wrangler.jsonc` with `"assets": { "directory": "./dist" }` and a
+- [x] `wrangler.jsonc` with `"assets": { "directory": "./dist" }` and a
       project `name`
-- [ ] Confirm `astro build` output (`dist/`) works as-is for Workers static
+- [x] Confirm `astro build` output (`dist/`) works as-is for Workers static
       assets, or whether any Astro config change is needed (e.g. trailing
       slash behavior, `build.format`)
-- [ ] `wrangler dev` locally to verify the built site serves correctly
+- [x] `wrangler dev` locally to verify the built site serves correctly
       before first deploy
-- [ ] `wrangler deploy` for the first live deployment (confirm with the user
-      before running — this is a real, visible deployment action)
+- [ ] `wrangler deploy` for the first live deployment — **not yet done, needs explicit go-ahead**
 
 ## Acceptance criteria
 
